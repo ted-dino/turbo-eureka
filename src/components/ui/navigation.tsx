@@ -34,7 +34,7 @@ const Navigation = () => {
   }, []);
 
   return (
-    <nav className={`w-full fixed z-11`}>
+    <nav className={`w-full fixed z-10`}>
       <div
         className={`px-10 flex items-center transition ${
           showBackground ? "bg-zinc-900 bg-opacity-90" : ""
