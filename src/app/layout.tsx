@@ -22,8 +22,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="shadow-banner relative h-screen lg:h-[140vh]">
             <Navigation />
             {children}
+            </div>
           </ThemeProvider>
         </body>
       </html>

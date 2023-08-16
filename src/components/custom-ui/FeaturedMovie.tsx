@@ -1,12 +1,12 @@
 "use client";
 
-import axiosEndpoint from "@/lib/axiosEndpoint";
 import { getRandomMovie } from "@/queryFns/movie";
 import { useQuery } from "@tanstack/react-query";
 import { Info, Play } from "lucide-react";
 import Image from "next/image";
 
 export default function FeaturedMovie() {
+  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["random"],
     queryFn: getRandomMovie,
@@ -16,21 +16,23 @@ export default function FeaturedMovie() {
   if (isLoading) {
     return <span>Loading...</span>;
   }
-  console.log(data);
+
   return (
-    <div className="relative w-full h-[900px]">
+    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
+      <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
       <Image
-        src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
+        src={`${backdrop_path}/${data.backdrop_path}`}
         alt={data.title}
         fill
         objectFit="cover"
       />
-      <div className="absolute w-[50%] top-[50%] md:top-[70%] ml-4 md:ml-16">
-        <h1 className="w-auto text-1xl md:text-5xl lg:text-6xl font-bold drop-shadow-2xl shadow-black">
+      </div>
+     
+        <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl">
           {data.title}
         </h1>
-        <p className="my-5 drop-shadow-2xl shadow-black">{data.overview}</p>
-        <div className="flex items-center gap-x-5">
+        <p className="movie-description max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">{data.overview}</p>
+        <div className="flex space-x-3">
           <button className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm">
             <Play absoluteStrokeWidth fill="black" color="black" />{" "}
             <span>Play</span>
@@ -41,6 +43,5 @@ export default function FeaturedMovie() {
           </button>
         </div>
       </div>
-    </div>
   );
 }
