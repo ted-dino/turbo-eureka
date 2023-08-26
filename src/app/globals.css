@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body{
+    @apply text-white;
+  }
+}
+
 @layer components {
   .shadow-banner {
     background-image: linear-gradient(
