@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 import Navigation from "@/components/ui/navigation";
 import QueryProvider from "@/QueryProvider";
 const inter = Inter({ subsets: ["latin"] });
@@ -21,12 +20,10 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="shadow-banner relative h-screen lg:h-[140vh]">
             <Navigation />
             {children}
             </div>
-          </ThemeProvider>
         </body>
       </html>
     </QueryProvider>

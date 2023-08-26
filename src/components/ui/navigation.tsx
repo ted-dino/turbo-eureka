@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "./mode-toggle";
 import Image from "next/image";
 import { Search } from "lucide-react";
 import MobileMenu from "./mobile-menu";
@@ -74,9 +73,6 @@ const Navigation = () => {
               <Search className="cursor-pointer" />
             </li>
             <li className="nav-item">Login</li>
-            <li className="nav-item">
-              <ModeToggle />
-            </li>
           </ul>
         </div>
       </div>
