@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function FeaturedMovie() {
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["random"],
     queryFn: getRandomMovie,
     refetchOnWindowFocus: false,
@@ -18,13 +18,13 @@ export default function FeaturedMovie() {
   }
 
   return (
-    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
-      <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
+    <div className="pl-4 pb-24 lg:space-y-10 lg:pl-16 flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
+      <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen hidden lg:block">
       <Image
-        src={`${backdrop_path}/${data.backdrop_path}`}
+        src={`${backdrop_path}${data.backdrop_path}`}
         alt={data.title}
         fill
-        objectFit="cover"
+        className="object-cover"
       />
       </div>
      
