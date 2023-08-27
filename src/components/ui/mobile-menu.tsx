@@ -24,7 +24,7 @@ export default function MobileMenu(
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="dark:bg-black dark:text-white">
-        {menu.map((menu) => <DropdownMenuItem>{menu.name}</DropdownMenuItem>)}
+        {menu.map((menu) => <DropdownMenuItem key={menu.id}>{menu.name}</DropdownMenuItem>)}
       </DropdownMenuContent>
     </DropdownMenu>
   );
