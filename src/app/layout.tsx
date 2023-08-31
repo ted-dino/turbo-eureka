@@ -20,10 +20,10 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="en">
         <body className={inter.className}>
-            <div className="shadow-banner relative h-screen lg:h-[140vh]">
+          <div className="shadow-banner relative h-screen lg:h-[140vh]">
             <Navigation />
             {children}
-            </div>
+          </div>
         </body>
       </html>
     </QueryProvider>

@@ -9,6 +9,7 @@ export const getRandomMovie = async () => {
   const randomMovie = await axiosEndpoint.get("/movie/top_rated", {
     params: {
       page: item,
+      include_adult: false,
       sort_by: "popularity.desc",
       query: "netflix",
     },
@@ -24,8 +25,7 @@ export const getRandomGenre = async () => {
 
   const randomMovieByGenre = await axiosEndpoint.get("/discover/movie", {
     params: {
-      include_adult: "false",
-      include_video: "false",
+      include_adult: false,
       page: item + randomIndex,
       sort_by: "popularity.desc",
       with_genres: genre,
