@@ -29,13 +29,14 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--max-lines);
   }
-  .my-slider button{
-    @apply opacity-100 lg:opacity-0
-  }
-  .my-slider:hover button{
-    @apply lg:opacity-100
+
+
+  .my-slider button {
+    @apply opacity-100 lg:opacity-0;
   }
 
+  .my-slider:hover button {
+    @apply lg:opacity-100;
+  }
 }
-
 
