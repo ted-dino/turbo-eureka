@@ -1,6 +1,6 @@
 export interface Result {
     page:          number;
-    results:       Result[];
+    results:       Item[];
     total_pages:   number;
     total_results: number;
 }
@@ -25,6 +25,7 @@ export interface Item {
     vote_average:      number;
     vote_count:        number;
 }
+
 
 export enum OriginCountry {
     CA = "CA",
