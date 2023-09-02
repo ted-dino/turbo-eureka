@@ -6,26 +6,26 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import { getBackdropImg } from "@/lib/utils";
 import useUIState from "@/store/uiState";
 import Image from "next/legacy/image";
-import Link from "next/link";
+import Buttons from "../Buttons";
 
 export default function MovieDialog() {
-  const { showModal, setShowModal, movieItem } = useUIState();
+  const { showModal, setShowModal, item } = useUIState();
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
 
   return (
     <Dialog open={showModal} onOpenChange={() => setShowModal(false)}>
       <DialogContent className="bg-none">
         <DialogHeader>
-          <DialogTitle>{movieItem.title}</DialogTitle>
+          <DialogTitle className="mb-5">{item.name ? item.name : item.title}</DialogTitle>
           <Image
-            src={getBackdropImg(backdrop_path, movieItem.backdrop_path)}
-            alt={movieItem.title}
+          className="rounded"
+            src={getBackdropImg(backdrop_path, item.backdrop_path)}
+            alt={item.name ? item.name : item.title}
             width={625}
             height={350}
             placeholder="blur"
@@ -33,11 +33,8 @@ export default function MovieDialog() {
               shimmer(625, 350)
             )}`}
           />
-          <DialogDescription>{movieItem.overview}</DialogDescription>
-          <div>
-            <Link href="">nobodys love</Link>
-            <Link href="">marong 5</Link>
-          </div>
+          <DialogDescription className="pt-3 pb-5">{item.overview}</DialogDescription>
+          <Buttons playLink="/porn" infoLink="/info-link"/>
         </DialogHeader>
       </DialogContent>
     </Dialog>

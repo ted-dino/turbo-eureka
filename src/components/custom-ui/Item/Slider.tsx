@@ -1,13 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getRandomGenre } from "@/queryFns/movie";
 import Slider, { CustomArrowProps } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Button } from "../ui/button";
-import MovieCard from "./MovieCard";
-import useUIState from "@/lib/uiState";
+import { Button } from "../../ui/button";
+import ItemCard from "./Card";
+import useUIState from "@/store/uiState";
+import {  Item, Result } from "@/types";
+import { Skeleton } from "../../ui/skeleton";
 
 const PrevArrow = (props: CustomArrowProps) => {
   return (
@@ -61,18 +62,24 @@ const NextArrow = (props: CustomArrowProps) => {
   );
 };
 
-export default function MovieSlider({ sliderKey }: { sliderKey: number }) {
-  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH;
-  const { setShowModal, showModal } = useUIState();
-  const { isLoading, data } = useQuery({
-    queryKey: [`slider-item-${sliderKey}`],
-    queryFn: getRandomGenre,
+interface Props {
+  queryFn: () => Promise<Result>;
+  title: string;
+}
+
+export default function ItemsSlider({ title,queryFn }: Props) {
+  const { setShowModal, setItem } = useUIState();
+  const { isLoading,isFetching, data } = useQuery({
+    queryKey: ["slider-items", title],
+    queryFn: queryFn,
     refetchOnWindowFocus: false,
   });
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  const setShowDialog = (item: Item) => {
+    setShowModal(true);
+    setItem(item);
+  };
+
   const settings = {
     dots: false,
     arrow: true,
@@ -109,34 +116,45 @@ export default function MovieSlider({ sliderKey }: { sliderKey: number }) {
     ],
   };
 
-  const setShowDialog = () => {
-    setShowModal(!showModal);
-    console.log(showModal)
-  };
-
   return (
     <>
-      <h2 className="mb-3 pl-14 text-2xl font-bold md:text-4xl lg:text-6xl">
-        {data?.genre}
-      </h2>
-      <Slider className="my-slider relative bg-transparent" {...settings}>
-        {data &&
-          data.results.length > 0 &&
-          data.results.slice(0, 10).map((item) => (
-            <>
-              <MovieCard
-                key={item.id}
-                src={
-                  item.backdrop_path
-                    ? `${backdrop_path}${item.backdrop_path}`
-                    : "/fallback.webp"
-                }
-                title={item.title}
-                handleClick={setShowDialog}
-              />
-            </>
-          ))}
-      </Slider>
+      {isFetching || isLoading ? (
+        <>
+          <div className="mb-3 pl-14">
+            <Skeleton className="h-12 w-32 md:w-40 lg:w-44" />
+          </div>
+          <div className={`grid gap-x-3 grid-cols-6`}>
+            {Array(6)
+              .fill("")
+              .map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="h-24 w-32 md:w-40 lg:w-44 rounded"
+                />
+              ))}
+          </div>
+        </>
+      ) : (
+        <div>
+          <h2 className="mb-3 pl-14 text-2xl font-bold md:text-4xl lg:text-5xl">
+            {title}
+          </h2>
+          <Slider className="my-slider relative bg-transparent" {...settings}>
+            {data &&
+              data.results.length > 0 &&
+              data.results
+                .slice(0, 10)
+                .map((item) => (
+                  <ItemCard
+                    key={item.id}
+                    path={item.backdrop_path}
+                    title={item.name ? item.name : item.title}
+                    handleClick={() => setShowDialog(item)}
+                  />
+                ))}
+          </Slider>
+        </div>
+      )}
     </>
   );
 }
