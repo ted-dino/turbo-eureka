@@ -1,19 +1,19 @@
-import { OriginalLanguage, Result } from "@/types.d";
+import { Item, OriginalLanguage } from "@/types.d";
 import { create } from "zustand";
 
 interface State {
   isLoading: boolean;
   showModal: boolean;
-  movieItem: Result;
+  item: Item;
   setShowModal: (showModal: boolean) => void;
   setLoading: (isLoading: boolean) => void;
-  setMovieItem: (item: Result) => void;
+  setItem: (item: Item) => void;
 }
 
 const useUIState = create<State>()((set) => ({
   isLoading: false,
   showModal: false,
-  movieItem: {
+  item: {
     adult: false,
     backdrop_path: "",
     genre_ids: [],
@@ -31,7 +31,7 @@ const useUIState = create<State>()((set) => ({
   },
   setShowModal: (showModal) => set({ showModal }),
   setLoading: (isLoading) => set({ isLoading }),
-  setMovieItem: (movieItem) => set({ movieItem }),
+  setItem: (item) => set({ item }),
 }));
 
 export default useUIState;
