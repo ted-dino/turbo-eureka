@@ -6,6 +6,8 @@ import { Info, Play } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { getBackdropImg } from "@/lib/utils";
+import Buttons from "./Buttons";
+import Link from "next/link";
 
 export default function FeaturedMovie() {
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
@@ -16,7 +18,7 @@ export default function FeaturedMovie() {
   });
 
   return (
-    <div className="px-4 pb-24 lg:space-y-10 lg:px-16 flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
+    <div className="px-4 pb-4 lg:space-y-10 lg:px-16 flex flex-col justify-center items-center md:items-start space-y-2 py-16 md:space-y-4 h-[30vh] md:h-[50vh] lg:h-[65vh] lg:justify-end lg:pb-12">
       {isFetching ? (
         <div className="h-full w-full flex items-center space-x-4 lg:h-[65vh]">
           <Skeleton className="h-full w-full" />
@@ -40,14 +42,20 @@ export default function FeaturedMovie() {
             {data.overview}
           </p>
           <div className="flex space-x-3">
-            <button className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm">
-              <Play absoluteStrokeWidth fill="black" color="black" />{" "}
+            <Link
+              className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm"
+              href={`/`}
+            >
+              <Play absoluteStrokeWidth fill="black" color="black" />
               <span>Play</span>
-            </button>
-            <button className="px-5 py-2 flex items-center gap-x-3 rounded-sm bg-white/30">
+            </Link>
+            <Link
+              className="px-5 py-2 flex items-center gap-x-3 rounded-sm bg-white/30"
+              href={`/`}
+            >
               <Info absoluteStrokeWidth />
-              More Info
-            </button>
+              <span>More Info</span>
+            </Link>
           </div>
         </>
       )}
