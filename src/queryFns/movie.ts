@@ -1,5 +1,5 @@
 import axiosEndpoint from "@/lib/axiosEndpoint";
-import { MovieResult, Result } from "@/types";
+import { MovieResult } from "@/types";
 import genres from "@/data/genres";
 
 const TMDB_MAX_PAGE = 500;
@@ -14,7 +14,6 @@ export const getRandomMovie = async () => {
       query: "netflix",
     },
   });
-  const data: MovieResult = await randomMovie.data;
 
   return randomMovie.data.results[0];
 };
@@ -29,6 +28,7 @@ export const getRandomGenre = async () => {
       page: item + randomIndex,
       sort_by: "popularity.desc",
       with_genres: genre,
+      language: "en-US",
     },
   });
 

@@ -58,3 +58,4 @@ const genres = [
 ];
 
 export default genres
+// SOURCE: https://developer.themoviedb.org/reference/genre-movie-list
