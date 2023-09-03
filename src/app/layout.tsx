@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/ui/navigation";
 import QueryProvider from "@/QueryProvider";
+import Footer from "@/components/custom-ui/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
           <div className="shadow-banner relative h-screen lg:h-[140vh]">
             <Navigation />
             {children}
+            <Footer />
           </div>
         </body>
       </html>
