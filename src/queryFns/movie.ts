@@ -1,12 +1,9 @@
 import axiosEndpoint from "@/lib/axiosEndpoint";
 
-export const getRandomMovie = async () => {
-  const TMDB_MAX_PAGE = 500;
-  const item = Math.floor(Math.random() * TMDB_MAX_PAGE) + 1;
-
-  const randomMovie = await axiosEndpoint.get("/movie/top_rated", {
+export const getRandomMovie = async (endpoint: string) => {
+  const randomMovie = await axiosEndpoint.get(endpoint, {
     params: {
-      page: item,
+      page: 1,
       include_adult: false,
       sort_by: "popularity.desc",
       query: "netflix",
@@ -14,4 +11,19 @@ export const getRandomMovie = async () => {
   });
 
   return randomMovie.data.results[0];
+};
+
+export const getMoviesByGenre = async (genre: string) => {
+  const result = await axiosEndpoint.get("/discover/movie", {
+    params: {
+      include_adult: "false",
+      include_video: "false",
+      language: "en-US",
+      page: 1,
+      sort_by: "popularity.desc",
+      with_genres: genre,
+    },
+  });
+
+  return result.data;
 };
