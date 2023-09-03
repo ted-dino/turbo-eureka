@@ -61,7 +61,7 @@ const Navigation = () => {
           <ul className="flex space-x-4">
             {menu.map((menu) => (
               <li className="nav-item" key={menu.id}>
-                <a href="#" className="nav-link">
+                <a href={`${menu.link}`} className="nav-link">
                   {menu.name}
                 </a>
               </li>
