@@ -9,8 +9,9 @@ interface Props {
   handleClick: () => void;
 }
 
-export default function MovieCard({  path, title, handleClick }: Props) {
+export default function MovieCard({ path, title, handleClick }: Props) {
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
+
   return (
     <div className="card-item pl-2 cursor-pointer">
       <Dialog>
