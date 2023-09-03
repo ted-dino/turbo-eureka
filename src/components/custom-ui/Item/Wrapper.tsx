@@ -1,14 +1,32 @@
 "use client";
 
 import { getList } from "@/queryFns/slider";
+import { getMoviesByGenre } from "@/queryFns/movie";
 import Slider from "./Slider";
-export default function Wrapper() {
+
+interface Props {
+  options: { title: string; params: string }[];
+  page: string;
+}
+export default function Wrapper({ options, page }: Props) {
   return (
     <div className="grid grid-cols-1 gap-y-16">
-      <Slider title="Popular Movies" queryFn={() => getList("/movie/popular")} />
-      <Slider title="Top Rated Movies" queryFn={() => getList("/movie/top_rated")} />
-      <Slider title="Popular Series" queryFn={() => getList("/tv/popular")}/>
-      <Slider title="Top Rated Series" queryFn={() => getList("/tv/top_rated")}/>
+      {page === "home" &&
+        options.map((option, index) => (
+          <Slider
+            key={index}
+            title={option.title}
+            queryFn={() => getList(`${option.params}`)}
+          />
+        ))}
+      {page === "movies" &&
+        options.map((option, index) => (
+          <Slider
+            key={index}
+            title={option.title}
+            queryFn={() => getMoviesByGenre(`${option.params}`)}
+          />
+        ))}
     </div>
   );
 }
