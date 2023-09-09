@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Button } from "../../ui/button";
 import ItemCard from "./Card";
 import useUIState from "@/store/uiState";
-import {  Item, Result } from "@/types";
+import { Item, Result } from "@/types";
 import { Skeleton } from "../../ui/skeleton";
 
 const PrevArrow = (props: CustomArrowProps) => {
@@ -67,9 +67,9 @@ interface Props {
   title: string;
 }
 
-export default function ItemsSlider({ title,queryFn }: Props) {
+export default function ItemsSlider({ title, queryFn }: Props) {
   const { setShowModal, setItem } = useUIState();
-  const { isLoading,isFetching, data } = useQuery({
+  const { isLoading, isFetching, data } = useQuery({
     queryKey: ["slider-items", title],
     queryFn: queryFn,
     refetchOnWindowFocus: false,
@@ -86,6 +86,8 @@ export default function ItemsSlider({ title,queryFn }: Props) {
     infinite: true,
     speed: 500,
     slidesToShow: 6,
+    draggable: false,
+    swipe: false,
     slidesToScroll: 1,
     centerPadding: "60px",
     centerMode: true,
@@ -136,7 +138,7 @@ export default function ItemsSlider({ title,queryFn }: Props) {
         </>
       ) : (
         <div>
-          <h2 className="mb-3 pl-14 text-2xl font-bold md:text-4xl lg:text-5xl">
+          <h2 className="slider-title mb-3 pl-14 text-2xl font-bold md:text-4xl lg:text-5xl cursor-pointer">
             {title}
           </h2>
           <Slider className="my-slider relative bg-transparent" {...settings}>

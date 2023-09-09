@@ -30,7 +30,6 @@
     -webkit-line-clamp: var(--max-lines);
   }
 
-
   .my-slider button {
     @apply opacity-100 lg:opacity-0;
   }
@@ -38,5 +37,26 @@
   .my-slider:hover button {
     @apply lg:opacity-100;
   }
-}
 
+  .slider-title {
+    width: fit-content;
+    transition: all 0.5s;
+    position: relative;
+  }
+  .slider-title::after {
+    content: "»";
+    position: absolute;
+    opacity: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .slider-title:hover {
+    padding-right: 50px;
+    /* padding-left: 8px; */
+  }
+  .slider-title:hover::after {
+    opacity: 1;
+    right: 10px;
+  }
+  /* SOURCE: https://codepen.io/konradwax/pen/woPNqJ */
+}
