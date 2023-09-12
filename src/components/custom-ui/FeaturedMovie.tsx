@@ -19,6 +19,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
     queryKey: ["featured-movie", queryFn],
     queryFn: queryFn,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   return (
@@ -34,14 +35,14 @@ export default function FeaturedMovie({ queryFn }: Props) {
               <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen hidden lg:block">
                 <Image
                   src={getBackdropImg(backdrop_path, data.backdrop_path)}
-                  alt={data.title}
+                  alt={data.name ? data.name : data.title}
                   fill
                   className="object-cover"
                   priority={true}
                 />
               </div>
-              <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl">
-                {data.title}
+              <h1 className="text-2xl w-full max-w-4xl font-bold md:text-4xl lg:text-7xl">
+                {data.name ? data.name : data.title}
               </h1>
               <p className="movie-description max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">
                 {data.overview}
