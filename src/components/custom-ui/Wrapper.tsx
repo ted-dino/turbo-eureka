@@ -1,8 +1,8 @@
 "use client";
 
-import FeaturedMovie from "./FeaturedMovie";
+import FeaturedItem from "./FeaturedMovie";
 import { getRandomMovie } from "@/queryFns/movie";
 
 export default function Wrapper({ endpoint }: { endpoint: string }) {
-  return <FeaturedMovie queryFn={() => getRandomMovie(endpoint)} />;
+  return <FeaturedItem queryFn={() => getRandomMovie(endpoint)} />;
 }

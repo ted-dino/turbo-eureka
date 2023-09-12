@@ -21,9 +21,11 @@ export default function MovieDialog() {
     <Dialog open={showModal} onOpenChange={() => setShowModal(false)}>
       <DialogContent className="bg-none">
         <DialogHeader>
-          <DialogTitle className="mb-5">{item.name ? item.name : item.title}</DialogTitle>
+          <DialogTitle className="mb-5">
+            {item.name ? item.name : item.title}
+          </DialogTitle>
           <Image
-          className="rounded"
+            className="rounded"
             src={getBackdropImg(backdrop_path, item.backdrop_path)}
             alt={item.name ? item.name : item.title}
             width={625}
@@ -33,8 +35,10 @@ export default function MovieDialog() {
               shimmer(625, 350)
             )}`}
           />
-          <DialogDescription className="pt-3 pb-5">{item.overview}</DialogDescription>
-          <Buttons playLink="/porn" infoLink="/info-link"/>
+          <DialogDescription className="pt-3 pb-5">
+            {item.overview}
+          </DialogDescription>
+          <Buttons playLink="/porn" infoLink="/info-link" />
         </DialogHeader>
       </DialogContent>
     </Dialog>

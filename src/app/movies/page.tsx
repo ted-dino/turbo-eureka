@@ -2,7 +2,7 @@ import Wrapper from "@/components/custom-ui/Wrapper";
 import SlidersWrapper from "@/components/custom-ui/Item/Wrapper";
 import ItemDialog from "@/components/custom-ui/Item/Dialog";
 
-export default function page() {
+export default function Movies() {
   const moviesEndpoints = [
     {
       title: "Action",
