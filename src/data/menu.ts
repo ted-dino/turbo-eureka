@@ -12,7 +12,7 @@ const menu = [
   {
     id: 3,
     name: "Series",
-    link: "#",
+    link: "tv-series",
   },
   {
     id: 4,
