@@ -11,3 +11,7 @@ export function getBackdropImg(path:string) {
 
   return backdrop_path + path
 }
+
+export function normalizeURL(url: string) {
+  return url.toLowerCase().replace(/ /g, "-").replace(/,/g, "").replace(/:/g, "-").replace(/-+/g, "-");
+}

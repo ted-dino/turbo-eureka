@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Info, Play } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
-import { getBackdropImg } from "@/lib/utils";
+import { getBackdropImg, normalizeURL } from "@/lib/utils";
 import Link from "next/link";
 import { Item } from "@/types";
 import { usePathname } from "next/navigation";
@@ -18,7 +18,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
   const pathname = usePathname();
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
   const { isLoading, isFetching, data } = useQuery({
-    queryKey: ["featured-movie",],
+    queryKey: ["featured-movie"],
     queryFn: queryFn,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -32,9 +32,6 @@ export default function FeaturedMovie({ queryFn }: Props) {
         return `/movies/${type}/${id}/${name}`;
     }
   };
-  function normalizeURL(url: string) {
-    return url.toLowerCase().replace(/ /g, "-");
-  }
 
   return (
     <div className="px-4 pb-4 lg:space-y-10 lg:px-16 flex flex-col justify-center items-center md:items-start space-y-2 py-16 md:space-y-4 h-[30vh] md:h-[50vh] lg:h-[65vh] lg:justify-end lg:pb-12">
