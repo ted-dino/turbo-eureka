@@ -8,19 +8,33 @@ import { Skeleton } from "../ui/skeleton";
 import { getBackdropImg } from "@/lib/utils";
 import Link from "next/link";
 import { Item } from "@/types";
+import { usePathname } from "next/navigation";
 
 interface Props {
   queryFn: () => Promise<Item>;
 }
 
 export default function FeaturedMovie({ queryFn }: Props) {
+  const pathname = usePathname();
   const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
   const { isLoading, isFetching, data } = useQuery({
-    queryKey: ["featured-movie", queryFn],
+    queryKey: ["featured-movie",],
     queryFn: queryFn,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   });
+
+  const formatURL = (type: string, id: number, name: string) => {
+    switch (pathname) {
+      case "/tv-series":
+        return `/tv-series/${type}/${id}/${name}`;
+      default:
+        return `/movies/${type}/${id}/${name}`;
+    }
+  };
+  function normalizeURL(url: string) {
+    return url.toLowerCase().replace(/ /g, "-");
+  }
 
   return (
     <div className="px-4 pb-4 lg:space-y-10 lg:px-16 flex flex-col justify-center items-center md:items-start space-y-2 py-16 md:space-y-4 h-[30vh] md:h-[50vh] lg:h-[65vh] lg:justify-end lg:pb-12">
@@ -34,7 +48,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
             <>
               <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen hidden lg:block">
                 <Image
-                  src={getBackdropImg(backdrop_path, data.backdrop_path)}
+                  src={getBackdropImg(data.backdrop_path)}
                   alt={data.name ? data.name : data.title}
                   fill
                   className="object-cover"
@@ -50,14 +64,22 @@ export default function FeaturedMovie({ queryFn }: Props) {
               <div className="flex space-x-3">
                 <Link
                   className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm"
-                  href={`/`}
+                  href={formatURL(
+                    "watch",
+                    data.id,
+                    normalizeURL(data.name ? data.name : data.title)
+                  )}
                 >
                   <Play absoluteStrokeWidth fill="black" color="black" />
                   <span>Play</span>
                 </Link>
                 <Link
                   className="px-5 py-2 flex items-center gap-x-3 rounded-sm bg-white/30"
-                  href={`/`}
+                  href={formatURL(
+                    "info",
+                    data.id,
+                    normalizeURL(data.name ? data.name : data.title)
+                  )}
                 >
                   <Info absoluteStrokeWidth />
                   <span>More Info</span>
