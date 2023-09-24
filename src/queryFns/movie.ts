@@ -27,3 +27,13 @@ export const getMoviesByGenre = async (genre: string) => {
 
   return result.data;
 };
+
+export const getMovieById = async (id: number) => {
+  const result = await axiosEndpoint.get(`/movie/${id}`, {
+    params: {
+      append_to_response: "credits,similar,videos"
+    }
+  })
+
+  return result.data
+}
