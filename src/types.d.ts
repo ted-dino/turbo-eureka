@@ -1,47 +1,70 @@
 export interface Result {
-  page: number;
   results: Item[];
-  total_pages: number;
-  total_results: number;
 }
 
 export interface Item {
-  adult: boolean;
   backdrop_path: string;
-  genre_ids: number[];
   id: number;
   first_air_date?: Date;
   name?: string;
-  origin_country?: OriginCountry[];
   original_name?: string;
-  original_language: OriginalLanguage;
   original_title: string;
   overview: string;
-  popularity: number;
   poster_path: string;
   release_date: Date;
   title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  runtime: number;
 }
 
-export enum OriginCountry {
-  CA = "CA",
-  Jp = "JP",
-  Kr = "KR",
-  Us = "US",
+export interface Show extends Item {
+  genres: Genre[];
+  similar: Similar;
+  videos: Videos;
+  credits: Credits;
 }
 
-export enum OriginalLanguage {
-  En = "en",
-  Fr = "fr",
-  Ja = "ja",
-  Uk = "uk",
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface Similar {
+  results: Item[];
+}
+
+export interface Videos {
+  results: VideosResult[];
+}
+
+export interface VideosResult {
+  name: string;
+  key: string;
+  site: string;
+  type: string;
+  id: string;
+}
+
+export interface Credits {
+  cast: Cast[];
+}
+
+
+export interface Cast {
+  adult: boolean;
+  gender: number;
+  id: number;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: null | string;
+  cast_id?: number;
+  character?: string;
+  credit_id: string;
+  order?: number;
+  job?: string;
 }
 
 export interface Season {
-  adult: boolean;
   backdrop_path: string;
   created_by: CreatedBy[];
   episode_run_time: any[];
