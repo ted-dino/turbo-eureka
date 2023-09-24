@@ -44,7 +44,7 @@ export default function SeriesDialog() {
           </DialogTitle>
           <Image
             className="rounded"
-            src={getBackdropImg(backdrop_path, item.backdrop_path)}
+            src={getBackdropImg(item.backdrop_path)}
             alt={item.name}
             width={625}
             height={350}

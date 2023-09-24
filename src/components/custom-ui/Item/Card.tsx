@@ -17,7 +17,7 @@ export default function MovieCard({ path, title, handleClick }: Props) {
       <Dialog>
         <DialogTrigger asChild>
           <Image
-            src={getBackdropImg(backdrop_path, path)}
+            src={getBackdropImg(path)}
             alt={title}
             width={300}
             height={150}

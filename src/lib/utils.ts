@@ -5,8 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getBackdropImg(link:string, path?:string) {
+export function getBackdropImg(path:string) {
+  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
   if(!path) return "/fallback.webp"
 
-  return link + path
+  return backdrop_path + path
 }
