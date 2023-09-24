@@ -1,5 +1,5 @@
 import { shimmer, toBase64 } from "@/lib/shimmer";
-import { getBackdropImg } from "@/lib/utils";
+import { getBackdropImg, normalizeURL } from "@/lib/utils";
 import { Show, Videos } from "@/types";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -59,26 +59,30 @@ export const InfoLayout = async ({ id }: Props) => {
   }
 
   function renderTrailerLink(videos: Videos) {
-    const trailerVideo = videos.results.find(
-      (video) => video.type === "Trailer"
-    );
-    const videoToUse = trailerVideo || videos.results[0];
+    if (videos.results.length > 0) {
+      const trailerVideo = videos.results.find(
+        (video) => video.type === "Trailer"
+      );
+      const videoToUse = trailerVideo || videos.results[0];
 
-    const videoSite =
-      videoToUse.site === "YouTube" ? "www.youtube.com/watch?v=" : "vimeo.com/";
-    const videoUrl = `https://${videoSite}${videoToUse.key}`;
+      const videoSite =
+        videoToUse.site === "YouTube"
+          ? "www.youtube.com/watch?v="
+          : "vimeo.com/";
+      const videoUrl = `https://${videoSite}${videoToUse.key}`;
 
-    return (
-      <Link
-        key={videoToUse.key}
-        href={videoUrl}
-        target="_blank"
-        className="px-4 py-1 text-black bg-white w-fit flex items-center gap-x-1 rounded-md"
-      >
-        <Clapperboard />
-        <span>Trailer</span>
-      </Link>
-    );
+      return (
+        <Link
+          key={videoToUse.key}
+          href={videoUrl}
+          target="_blank"
+          className="px-4 py-1 text-black bg-white w-fit flex items-center gap-x-1 rounded-md"
+        >
+          <Clapperboard />
+          <span>Trailer</span>
+        </Link>
+      );
+    }
   }
 
   return (
@@ -96,7 +100,7 @@ export const InfoLayout = async ({ id }: Props) => {
             )}`}
             className="rounded-md"
           />
-          <div className="py-10 flex gap-x-10">
+          <div className="py-10 grid grid-cols-6 gap-x-10">
             <Image
               src={getBackdropImg(data.poster_path)}
               alt={data.name ? data.name : data.title}
@@ -104,7 +108,7 @@ export const InfoLayout = async ({ id }: Props) => {
               height={266}
               className="rounded-md"
             />
-            <div className="grid gap-y-2">
+            <div className="col-span-4 grid gap-y-2">
               <h1 className="text-5xl">{data.name ? data.name : data.title}</h1>
               {renderTrailerLink(data.videos)}
               <p>{data.overview}</p>
@@ -143,7 +147,7 @@ export const InfoLayout = async ({ id }: Props) => {
                 </li>
               </ul>
             </div>
-            <div className="w-2/4 flex flex-col gap-y-4">
+            <div className="flex flex-col gap-y-4">
               <Link
                 href="/"
                 className="py-2 bg-[#d82327] flex justify-center items-center gap-x-2 rounded-md"
@@ -160,19 +164,29 @@ export const InfoLayout = async ({ id }: Props) => {
           <div className="mb-20">
             <h2 className="mt-10 mb-5 text-4xl">You may also like</h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 place-items-center gap-20">
-            {data.similar.results.map(similar => (
-              <li className="relative grid h-[330px] w-[217px]" key={similar.id}>
-              <Image
-                src={getBackdropImg(similar.poster_path)}
-                alt={similar.title}
-                fill
-                className="mb-5 object-cover rounded-md"
-              />
-                <span className="relative block mt-[152%]">{similar.title}</span>
-              </li>
-            ))}
-              </ul>
-
+              {data.similar.results.map((similar) => (
+                <li
+                  className="relative grid h-[330px] w-[217px]"
+                  key={similar.id}
+                >
+                  <Link
+                    href={`/movies/info/${similar.id}/${normalizeURL(
+                      similar.title
+                    )}`}
+                  >
+                    <Image
+                      src={getBackdropImg(similar.poster_path)}
+                      alt={similar.title}
+                      fill
+                      className="mb-5 object-cover rounded-md"
+                    />
+                    <span className="relative block mt-[152%]">
+                      {similar.title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </>
       )}
