@@ -18,11 +18,11 @@ export default function Movies() {
     },
     {
       title: "Family",
-      params: "Family",
+      params: "10751",
     },
     {
       title: "History",
-      params: "10751",
+      params: "36",
     },
     {
       title: "Horror",
