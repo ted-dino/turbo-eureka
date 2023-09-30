@@ -13,5 +13,9 @@ export function getBackdropImg(path:string) {
 }
 
 export function normalizeURL(url: string) {
-  return url.toLowerCase().replace(/ /g, "-").replace(/,/g, "").replace(/:/g, "-").replace(/'/g, "-").replace(/-+/g, "-");
+  return url
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") 
+    .replace(/\s+/g, "-") 
+    .replace(/-+/g, "-");
 }
