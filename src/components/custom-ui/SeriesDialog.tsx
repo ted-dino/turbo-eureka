@@ -18,7 +18,6 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function SeriesDialog() {
   const { showModal, setShowModal, item } = useUIState();
-  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
   const { isFetching, data: series } = useQuery({
     queryKey: ["series-items", item.id],
     queryFn: () => getSeriesById(item.id),

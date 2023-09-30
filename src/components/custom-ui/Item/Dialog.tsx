@@ -15,7 +15,7 @@ import Buttons from "../Buttons";
 
 export default function MovieDialog() {
   const { showModal, setShowModal, item } = useUIState();
-  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
+  
   return (
     <Dialog open={showModal} onOpenChange={() => setShowModal(false)}>
       <DialogContent className="bg-none">
