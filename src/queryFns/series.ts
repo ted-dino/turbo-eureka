@@ -1,5 +1,5 @@
 import axiosEndpoint from "@/lib/axiosEndpoint";
-import { Season } from "@/types";
+import { Season, Series } from "@/types";
 
 export const getPopularSeries = async (endpoint: string) => {
   const randomMovie = await axiosEndpoint.get(endpoint, {
@@ -33,7 +33,20 @@ export const getSeriesById = async (id: number) => {
     params: { language: "en-US" },
   });
 
-  const data: Season = await result.data;
+  const data: Series = await result.data;
 
   return data;
+};
+
+export const getSeasonById = async (seriesId: number, episodeId: number) => {
+  const result = await axiosEndpoint.get(
+    `/tv/${seriesId}/season/${episodeId}`,
+    {
+      params: { language: "en-US" },
+    }
+  );
+
+  const data: Season = await result.data
+
+  return data
 };
