@@ -30,8 +30,11 @@ export const SeasonList = ({ seriesId, seasonArray }: Props) => {
 
   return (
     <>
-      <Select onValueChange={(value) => setEpisodeId(Number(value))}>
-        <SelectTrigger className="w-[180px]">
+      <Select
+        defaultValue={`${episodeId}`}
+        onValueChange={(value) => setEpisodeId(Number(value))}
+      >
+        <SelectTrigger className="w-max">
           <SelectValue placeholder={`${seasonArray[0].name}`} />
         </SelectTrigger>
         <SelectContent>
