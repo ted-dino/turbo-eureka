@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { shimmer, toBase64 } from "@/lib/shimmer";
-import { getBackdropImg } from "@/lib/utils";
+import { formatDate, getBackdropImg } from "@/lib/utils";
 import useUIState from "@/store/uiState";
 import Image from "next/legacy/image";
 import Buttons from "@/components/custom-ui/Buttons";
@@ -24,8 +24,6 @@ export default function SeriesDialog() {
     refetchOnWindowFocus: false,
     enabled: item.id !== 0,
   });
-
-  const date = new Intl.DateTimeFormat("en-US", { dateStyle: "medium" });
 
   return (
     <Dialog open={showModal} onOpenChange={() => setShowModal(false)}>
@@ -49,7 +47,7 @@ export default function SeriesDialog() {
             height={350}
             placeholder="blur"
             blurDataURL={`data:image/svg+xml;base64,${toBase64(
-              shimmer(625, 350)
+              shimmer(625, 350),
             )}`}
           />
           <DialogDescription className="pt-3">
@@ -60,9 +58,9 @@ export default function SeriesDialog() {
               <>
                 <li>Other name: {series.original_name}</li>
                 <li>
-                  Date aired: {date.format(new Date(series.first_air_date))} /{" "}
+                  Date aired: {formatDate(series.first_air_date, "long")} /{" "}
                   {series.last_air_date
-                    ? date.format(new Date(series.last_air_date))
+                    ? formatDate(series.last_air_date, "long")
                     : "?"}
                 </li>
                 <li>Status: {series.status}</li>
