@@ -5,19 +5,18 @@ import { formatDate, getBackdropImg, normalizeURL } from "@/lib/utils";
 import { Movie, Show, Videos } from "@/types";
 import { Clapperboard, Play, Plus } from "lucide-react";
 import { Metadata } from "next";
-import { default as NextImage } from "next/image";
 import { default as ImageLegacy } from "next/legacy/image";
 import Link from "next/link";
 
 type Props = {
-  params: { slug: string[] };
+  params: { id: number };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
   const TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN as string;
-  const id = params.slug[0];
+  const id = params.id;
 
   const options = {
     method: "GET",
@@ -62,8 +61,8 @@ async function getData(id: number) {
   return res.json();
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
-  const [id, _] = params.slug;
+export default async function Page({ params }: { params: { id: number } }) {
+  const { id } = params;
   const data: Show = await getData(Number(id));
 
   function minsToHrs(minutes: number) {

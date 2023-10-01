@@ -11,14 +11,14 @@ import { Metadata } from "next";
 import SimilarList from "@/components/custom-ui/SimilarList";
 
 type Props = {
-  params: { slug: string[] };
+  params: { id: number };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
   const TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN as string;
-  const id = params.slug[0];
+  const { id } = params;
 
   const options = {
     method: "GET",
@@ -63,8 +63,8 @@ async function getData(id: number) {
   return res.json();
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
-  const id = params.slug[0];
+export default async function Page({ params }: { params: { id: number } }) {
+  const { id } = params;
   const data: SeriesList = await getData(Number(id));
 
   function renderTrailerLink(videos: Videos) {
@@ -172,7 +172,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
           </div>
           <div className="flex flex-col gap-y-4 min-w-max">
             <Link
-              href="/"
+              href={`/tv-series/watch/${data.id}/${normalizeURL(data.name)}`}
               className="py-2 bg-[#d82327] flex justify-center items-center gap-x-2 rounded-md"
             >
               <Play size={20} />
