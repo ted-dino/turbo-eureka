@@ -1,12 +1,43 @@
 import { SeasonList } from "@/components/custom-ui/SeasonList";
 import { Button } from "@/components/ui/button";
 import { shimmer, toBase64 } from "@/lib/shimmer";
-import { getBackdropImg, normalizeURL } from "@/lib/utils";
-import { SeriesList, Videos } from "@/types";
+import { formatDate, getBackdropImg, normalizeURL } from "@/lib/utils";
+import { Series, SeriesList, Videos } from "@/types";
 import { Clapperboard, Play, Plus } from "lucide-react";
 import { default as NextImage } from "next/image";
 import { default as ImageLegacy } from "next/legacy/image";
 import Link from "next/link";
+import { Metadata } from "next";
+import SimilarList from "@/components/custom-ui/SimilarList";
+
+type Props = {
+  params: { slug: string[] };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
+  const TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN as string;
+  const id = params.slug[0];
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  };
+  const res = await fetch(
+    `${TMBD_URL}/tv/${id}?language=en-US&page=1`,
+    options,
+  );
+
+  const series: Series = await res.json();
+  return {
+    title: `TedFlix - ${series.name}`,
+    description: series.overview,
+  };
+}
 
 async function getData(id: number) {
   const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
@@ -22,25 +53,24 @@ async function getData(id: number) {
 
   const res = await fetch(
     `${TMBD_URL}/tv/${id}?language=en-US&page=1&append_to_response=similar,credits,videos`,
-    options
+    options,
   );
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.text}`);
+    throw new Error(`Error: ${res.statusText}`);
   }
 
   return res.json();
 }
 
-export default async function Page({ params }: { params: { id: number } }) {
-  const data: SeriesList = await getData(params.id);
-
-  const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" });
+export default async function Page({ params }: { params: { slug: string[] } }) {
+  const id = params.slug[0];
+  const data: SeriesList = await getData(Number(id));
 
   function renderTrailerLink(videos: Videos) {
     if (videos.results.length > 0) {
       const trailerVideo = videos.results.find(
-        (video) => video.type === "Trailer"
+        (video) => video.type === "Trailer",
       );
       const videoToUse = trailerVideo || videos.results[0];
 
@@ -76,7 +106,7 @@ export default async function Page({ params }: { params: { id: number } }) {
               height={720}
               placeholder="blur"
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(1400, 720)
+                shimmer(1400, 720),
               )}`}
               className="hidden lg:block rounded-md"
             />
@@ -104,10 +134,12 @@ export default async function Page({ params }: { params: { id: number } }) {
               <p className="text-sm md:text-base">{data.overview}</p>
             </div>
             <ul className="text-sm md:text-base">
-              <li>
-                <span className="font-bold mr-1">Release Date:</span>{" "}
-                {date.format(new Date(data.first_air_date))}
-              </li>
+              {data.first_air_date && (
+                <li>
+                  <span className="font-bold mr-1">Release Date:</span>{" "}
+                  {formatDate(data.first_air_date, "long")}
+                </li>
+              )}
               <li className="flex">
                 <span className="font-bold mr-1">Genres:</span>
                 <ul className="flex gap-x-1">
@@ -156,32 +188,7 @@ export default async function Page({ params }: { params: { id: number } }) {
       <section className="mx-5 lg:mx-0 p-10 rounded-md bg-[#292929]/40 max-h-96 overflow-y-scroll">
         <SeasonList seriesId={data.id} seasonArray={data.seasons} />
       </section>
-      <section className="mb-20 px-5 lg:px-0">
-        <h2 className="mt-10 mb-5 text-xl lg:text-4xl">You may also like</h2>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 place-items-center gap-8 md:gap-14">
-          {data.similar.results.map((similar) => (
-            <li key={similar.id} className="mb-5">
-              <Link
-                href={`/tv-series/info/${similar.id}/${normalizeURL(
-                  similar.name!
-                )}`}
-                className="relative grid h-[150px] w-[150px] md:h-[330px] md:w-[217px]"
-              >
-                <NextImage
-                  src={getBackdropImg(similar.poster_path)}
-                  alt={similar.name!}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="mb-5 object-cover rounded-md w-auto h-auto"
-                />
-                <span className="relative block mt-[100%] md:mt-[154%] text-sm leading-tight">
-                  {similar.name!}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <SimilarList similar={data.similar} route="tv-series" />
     </main>
   );
 }
