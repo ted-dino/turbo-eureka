@@ -1,22 +1,20 @@
 "use client";
 
-import { getRandomMovie } from "@/queryFns/movie";
 import { useQuery } from "@tanstack/react-query";
 import { Info, Play } from "lucide-react";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { getBackdropImg, normalizeURL } from "@/lib/utils";
 import Link from "next/link";
-import { Item } from "@/types";
 import { usePathname } from "next/navigation";
+import { Movie } from "@/types";
 
 interface Props {
-  queryFn: () => Promise<Item>;
+  queryFn: () => Promise<Movie>;
 }
 
 export default function FeaturedMovie({ queryFn }: Props) {
   const pathname = usePathname();
-  const backdrop_path = process.env.NEXT_PUBLIC_BACKDROP_PATH as string;
   const { isLoading, isFetching, data } = useQuery({
     queryKey: ["featured-movie"],
     queryFn: queryFn,
@@ -29,7 +27,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
       case "/tv-series":
         return `/tv-series/${type}/${id}/${name}`;
       default:
-        return `/movies/${type}/${id}/${name}`;
+        return `/movies/${type}/${id}/${name}?source=0`;
     }
   };
 
@@ -64,7 +62,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
                   href={formatURL(
                     "watch",
                     data.id,
-                    normalizeURL(data.name ? data.name : data.title)
+                    normalizeURL(data.name ? data.name : data.title),
                   )}
                 >
                   <Play absoluteStrokeWidth fill="black" color="black" />
@@ -75,7 +73,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
                   href={formatURL(
                     "info",
                     data.id,
-                    normalizeURL(data.name ? data.name : data.title)
+                    normalizeURL(data.name ? data.name : data.title),
                   )}
                 >
                   <Info absoluteStrokeWidth />
