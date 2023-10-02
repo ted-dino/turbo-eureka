@@ -172,7 +172,9 @@ export default async function Page({ params }: { params: { id: number } }) {
           </div>
           <div className="flex flex-col gap-y-4 min-w-max">
             <Link
-              href={`/tv-series/watch/${data.id}/${normalizeURL(data.name)}`}
+              href={`/tv-series/watch/${data.id}/${normalizeURL(
+                data.name,
+              )}?source=0&season=${data.seasons[0].season_number}&episode=1`}
               className="py-2 bg-[#d82327] flex justify-center items-center gap-x-2 rounded-md"
             >
               <Play size={20} />
