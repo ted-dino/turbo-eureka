@@ -59,4 +59,56 @@
     right: 10px;
   }
   /* SOURCE: https://codepen.io/konradwax/pen/woPNqJ */
+
+  .loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .loading .spinner {
+    position: absolute;
+    inset: 0;
+  }
+
+  #infinity-outline {
+    fill: transparent;
+    stroke-width: 4;
+    stroke: #582a6b;
+    stroke-dasharray: 3px, 300px;
+    stroke-dashoffset: 0;
+    animation: anim 3000ms linear infinite;
+  }
+
+  #infinity-bg {
+    fill: transparent;
+    stroke-width: 4;
+    stroke: #424242;
+    opacity: 0.2;
+  }
+
+  @keyframes anim {
+    12.5% {
+      stroke-dasharray: 42px, 300px;
+      stroke-dashoffset: -33px;
+    }
+    43.75% {
+      stroke-dasharray: 105px, 300px;
+      stroke-dashoffset: -105px;
+    }
+    100% {
+      stroke-dasharray: 3px, 300px;
+      stroke-dashoffset: -297px;
+    }
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
 }
