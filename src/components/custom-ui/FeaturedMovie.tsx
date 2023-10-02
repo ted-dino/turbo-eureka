@@ -25,7 +25,7 @@ export default function FeaturedMovie({ queryFn }: Props) {
   const formatURL = (type: string, id: number, name: string) => {
     switch (pathname) {
       case "/tv-series":
-        return `/tv-series/${type}/${id}/${name}`;
+        return `/tv-series/${type}/${id}/${name}?source=0&season=1&episode=1`;
       default:
         return `/movies/${type}/${id}/${name}?source=0`;
     }
