@@ -24,7 +24,7 @@ export default function SeriesPlayer({ series_id }: Props) {
 
   return (
     <section>
-      <div className="flex flex-col md:flex-row gap-x-3">
+      <div className="flex flex-col md:flex-row gap-x-3 h-[calc(90vh-40px)]">
         <div className="order-2 md:-order-1 ml-1 w-full md:w-72 bg-[#292929]/40">
           <EpisodeList series_id={series_id} />
         </div>
@@ -34,7 +34,7 @@ export default function SeriesPlayer({ series_id }: Props) {
               allowFullScreen
               id="series-iframe"
               src={`${streamUrls[0]}/tv/${series_id}/${seasonSearchParam}/${episodeSearchParam}`}
-              className="w-full h-[calc(90vh-40px)]"
+              className="w-full h-full"
             />
           )}
           {Number(sourceSearchParam) === 1 && (
@@ -42,7 +42,7 @@ export default function SeriesPlayer({ series_id }: Props) {
               allowFullScreen
               id="series-iframe"
               src={`${streamUrls[1]}/tv/tmdb/${series_id}-${seasonSearchParam}-${episodeSearchParam}`}
-              className="w-full h-[calc(100vh-40px)]"
+              className="w-full h-full"
             />
           )}
           {Number(sourceSearchParam) === 2 && (
@@ -50,7 +50,7 @@ export default function SeriesPlayer({ series_id }: Props) {
               allowFullScreen
               id="series-iframe"
               src={`${streamUrls[2]}=${series_id}&tmdb=1&s=${seasonSearchParam}&e=${episodeSearchParam}`}
-              className="w-full h-[calc(100vh-40px)]"
+              className="w-full h-full"
             />
           )}
           {Number(sourceSearchParam) === 3 && (
@@ -58,7 +58,7 @@ export default function SeriesPlayer({ series_id }: Props) {
               allowFullScreen
               id="series-iframe"
               src={`${streamUrls[3]}=${series_id}&season=${seasonSearchParam}&episode=${episodeSearchParam}`}
-              className="w-full h-[calc(100vh-40px)]"
+              className="w-full h-full"
             />
           )}
         </div>
