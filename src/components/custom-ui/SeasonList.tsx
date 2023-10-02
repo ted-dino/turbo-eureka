@@ -21,18 +21,18 @@ interface Props {
 }
 
 export const SeasonList = ({ seriesId, seasonArray }: Props) => {
-  const [episodeId, setEpisodeId] = useState(seasonArray[0].season_number);
+  const [seasonId, setSeasonId] = useState(seasonArray[0].season_number);
   const { data: seasons } = useQuery({
-    queryKey: ["episode", episodeId],
-    queryFn: () => getSeasonById(seriesId, episodeId),
+    queryKey: ["seasons-list", seasonId],
+    queryFn: () => getSeasonById(seriesId, seasonId),
     refetchOnWindowFocus: false,
   });
 
   return (
     <>
       <Select
-        defaultValue={`${episodeId}`}
-        onValueChange={(value) => setEpisodeId(Number(value))}
+        defaultValue={`${seasonId}`}
+        onValueChange={(value) => setSeasonId(Number(value))}
       >
         <SelectTrigger className="w-max">
           <SelectValue placeholder={`${seasonArray[0].name}`} />
@@ -52,7 +52,6 @@ export const SeasonList = ({ seriesId, seasonArray }: Props) => {
               <li
                 className="py-2 px-4 bg-[#292929] rounded-md cursor-pointer"
                 key={season.id}
-                onClick={() => console.log(season.episode_number)}
               >
                 <Link href="#" className="flex items-center gap-x-2 ">
                   <div className="w-5">
