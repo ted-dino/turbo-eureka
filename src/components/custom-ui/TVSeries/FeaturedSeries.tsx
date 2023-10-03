@@ -72,7 +72,7 @@ export default async function FeaturedSeries() {
                 </Link>
                 <Link
                   className="px-5 py-2 flex items-center gap-x-3 rounded-sm bg-white/30"
-                  href={`/tv-series/info/${id}/${normalizeURL(name!)}?season=0`}
+                  href={`/tv-series/info/${id}/${normalizeURL(name!)}?season=1`}
                 >
                   <Info absoluteStrokeWidth />
                   <span>More Info</span>
