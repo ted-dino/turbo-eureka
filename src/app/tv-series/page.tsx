@@ -19,6 +19,10 @@ export default function Series({ searchParams }: Props) {
       params: "10759",
     },
     {
+      title: "Animation",
+      params: "16",
+    },
+    {
       title: "Comedy",
       params: "35",
     },
@@ -31,32 +35,8 @@ export default function Series({ searchParams }: Props) {
       params: "18",
     },
     {
-      title: "Family",
-      params: "10751",
-    },
-    {
-      title: "Mystery",
-      params: "9648",
-    },
-    {
-      title: "News",
-      params: "10763",
-    },
-    {
-      title: "Reality",
-      params: "10764",
-    },
-    {
       title: "Sci-Fi & Fantasy",
       params: "10765",
-    },
-    {
-      title: "Soap",
-      params: "10766",
-    },
-    {
-      title: "Talk",
-      params: "10767",
     },
     {
       title: "War & Politics",
