@@ -27,3 +27,22 @@ export function formatDate(
   const formattedDate = new Intl.DateTimeFormat("en-US", { dateStyle });
   return formattedDate.format(new Date(date));
 }
+
+export function minsToHrs(minutes: number) {
+  if (typeof minutes !== "number" || minutes < 0) {
+    return "Invalid input";
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (hours === 0) {
+    return `${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
+  } else if (remainingMinutes === 0) {
+    return `${hours} hour${hours !== 1 ? "s" : ""}`;
+  } else {
+    return `${hours} hour${
+      hours !== 1 ? "s" : ""
+    } and ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
+  }
+}
