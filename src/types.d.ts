@@ -14,6 +14,8 @@ export interface Movie {
   release_date: Date;
   title: string;
   runtime: number;
+  genres: Genre[];
+  credits: Credits;
 }
 
 export interface Show extends Movie {
