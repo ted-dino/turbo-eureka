@@ -43,10 +43,10 @@ export const getSeasonById = async (seriesId: number, episodeId: number) => {
     `/tv/${seriesId}/season/${episodeId}`,
     {
       params: { language: "en-US" },
-    }
+    },
   );
 
-  const data: Season = await result.data
+  const data: Season = await result.data;
 
-  return data
+  return data;
 };
