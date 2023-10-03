@@ -95,7 +95,7 @@ export default function MovieDialog() {
                 </ul>
               </ul>
               <Buttons
-                playLink={`${pathname}movies/watch/${item.id}/${normalizeURL(
+                playLink={`${pathname}/watch/${item.id}/${normalizeURL(
                   item.title,
                 )}?source=0`}
                 infoLink="/info-link"
