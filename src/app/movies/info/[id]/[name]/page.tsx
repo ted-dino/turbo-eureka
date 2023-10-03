@@ -1,7 +1,12 @@
 import SimilarList from "@/components/custom-ui/SimilarList";
 import { Button } from "@/components/ui/button";
 import { shimmer, toBase64 } from "@/lib/shimmer";
-import { formatDate, getBackdropImg, normalizeURL } from "@/lib/utils";
+import {
+  formatDate,
+  getBackdropImg,
+  minsToHrs,
+  normalizeURL,
+} from "@/lib/utils";
 import { Movie, Show, Videos } from "@/types";
 import { Clapperboard, Play, Plus } from "lucide-react";
 import { Metadata } from "next";
@@ -64,25 +69,6 @@ async function getData(id: number) {
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const data: Show = await getData(Number(id));
-
-  function minsToHrs(minutes: number) {
-    if (typeof minutes !== "number" || minutes < 0) {
-      return "Invalid input";
-    }
-
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-
-    if (hours === 0) {
-      return `${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
-    } else if (remainingMinutes === 0) {
-      return `${hours} hour${hours !== 1 ? "s" : ""}`;
-    } else {
-      return `${hours} hour${
-        hours !== 1 ? "s" : ""
-      } and ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
-    }
-  }
 
   function renderTrailerLink(videos: Videos) {
     if (videos.results.length > 0) {
@@ -194,7 +180,9 @@ export default async function Page({ params }: { params: { id: number } }) {
         </div>
         <div className="flex flex-col gap-y-4 min-w-max">
           <Link
-            href={`/movies/watch/${data.id}/${normalizeURL(data.title)}`}
+            href={`/movies/watch/${data.id}/${normalizeURL(
+              data.title,
+            )}?source=0`}
             className="py-2 bg-[#d82327] flex justify-center items-center gap-x-2 rounded-md"
           >
             <Play size={20} />
