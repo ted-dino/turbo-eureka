@@ -29,7 +29,7 @@ export default function EpisodeList({ series_id }: Props) {
   const [seasonData, episodeData] = useQueries({
     queries: [
       {
-        queryKey: ["series", seasonSearchParam],
+        queryKey: ["series"],
         queryFn: () => getSeriesById(series_id),
       },
       {
@@ -39,8 +39,8 @@ export default function EpisodeList({ series_id }: Props) {
     ],
   });
 
-  const { data: seasonItem, isLoading: seasonLoading } = seasonData;
-  const { data: episodes, isLoading: epsLoading } = episodeData;
+  const { data: seasonItem } = seasonData;
+  const { data: episodes, isFetching: epsFetching } = episodeData;
   const current = new URLSearchParams(Array.from(searchParams.entries()));
 
   const handleSeasonChange = (season: string) => {
@@ -69,78 +69,80 @@ export default function EpisodeList({ series_id }: Props) {
   };
 
   return (
-    <ScrollArea className="h-full max-h-[827px] md:max-w-[250px]">
-      <div className="relative flex flex-col">
-        {(!seasonLoading || !epsLoading) && seasonItem && seasonItem.seasons ? (
+    <div className="relative py-3 flex flex-col h-full">
+      <div className="flex gap-x-2 p-2 border-b max-w-[235px] h-[50px]">
+        {seasonItem && seasonItem.seasons && (
           <>
-            <div className="flex gap-x-2 p-2 border-b">
-              <Select
-                onValueChange={(value) => handleSeasonChange(value)}
-                defaultValue={`${Number(seasonSearchParam)}`}
-              >
-                <SelectTrigger className="w-full max-w-[108px] h-8 text-ellipsis overflow-hidden whitespace-nowrap">
-                  <SelectValue
-                    className="text-xs"
-                    placeholder={`${seasonItem.seasons[0].name}`}
-                  />
-                </SelectTrigger>
-                <SelectContent className="w-full">
-                  {seasonItem.seasons.map((season) => (
-                    <SelectItem
-                      className="text-xs"
-                      key={season.id}
-                      value={`${season.season_number}`}
-                    >
-                      {season.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <form onSubmit={(e) => handleSubmit(e)}>
-                <Input
-                  type="number"
-                  name="episode_number"
-                  placeholder="Eps number"
-                  className="text-xs h-8 max-w-[108px]"
-                  max={episodes?.episodes.length}
-                  min={1}
-                  defaultValue={undefined}
+            <Select
+              onValueChange={(value) => handleSeasonChange(value)}
+              defaultValue={`${Number(seasonSearchParam)}`}
+            >
+              <SelectTrigger className="w-full max-w-[108px] h-8 text-ellipsis overflow-hidden whitespace-nowrap">
+                <SelectValue
+                  className="text-xs"
+                  placeholder={`${seasonItem.seasons[0].name}`}
                 />
-              </form>
-            </div>
-            <ul className="flex flex-col gap-y-3 p-2 h-full">
-              {episodes &&
-                episodes.episodes.map((episode, index) => (
-                  <li
-                    key={episode.id}
-                    className={`${
-                      Number(episodeSearchParam) === index + 1
-                        ? "bg-[#d82327]"
-                        : "bg-[#292929]/40"
-                    } py-2 px-3 rounded`}
+              </SelectTrigger>
+              <SelectContent className="w-full">
+                {seasonItem.seasons.map((season) => (
+                  <SelectItem
+                    className="text-xs"
+                    key={season.id}
+                    value={`${season.season_number}`}
                   >
-                    <Link
-                      className="flex items-center gap-x-2"
-                      href={`${pathName}?source=${sourceSearchParam}&season=${seasonSearchParam}&episode=${
-                        index + 1
-                      }`}
-                    >
-                      <span>{index + 1}</span>
-                      <span className="max-w-[165px] text-ellipsis overflow-hidden whitespace-nowrap">
-                        {episode.name}
-                      </span>
-                      {Number(episodeSearchParam) === index + 1 && (
-                        <Play className="ml-auto" size="18" />
-                      )}
-                    </Link>
-                  </li>
+                    {season.name}
+                  </SelectItem>
                 ))}
-            </ul>
+              </SelectContent>
+            </Select>
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <Input
+                type="number"
+                name="episode_number"
+                placeholder="Eps number"
+                className="text-xs h-8 max-w-[108px]"
+                max={episodes?.episodes.length}
+                min={1}
+                defaultValue={undefined}
+              />
+            </form>
           </>
-        ) : (
-          <Spinner />
         )}
       </div>
-    </ScrollArea>
+      <ul className="flex flex-col gap-y-2 p-2 h-full">
+        {epsFetching && !episodes ? (
+          <Spinner />
+        ) : (
+          <>
+            {episodes &&
+              episodes.episodes.map((episode, index) => (
+                <li
+                  key={episode.id}
+                  className={`${
+                    Number(episodeSearchParam) === index + 1
+                      ? "bg-[#d82327]"
+                      : "bg-[#292929]/40"
+                  } py-2 px-3 rounded`}
+                >
+                  <Link
+                    className="flex items-center gap-x-2"
+                    href={`${pathName}?source=${sourceSearchParam}&season=${seasonSearchParam}&episode=${
+                      index + 1
+                    }`}
+                  >
+                    <span>{index + 1}</span>
+                    <span className="max-w-[165px] text-ellipsis overflow-hidden whitespace-nowrap">
+                      {episode.name}
+                    </span>
+                    {Number(episodeSearchParam) === index + 1 && (
+                      <Play className="ml-auto" size="18" />
+                    )}
+                  </Link>
+                </li>
+              ))}
+          </>
+        )}
+      </ul>
+    </div>
   );
 }
