@@ -1,8 +1,18 @@
-import Wrapper from "@/components/custom-ui/Wrapper";
-import SlidersWrapper from "@/components/custom-ui/Item/Wrapper";
-import SeriesDialog from "@/components/custom-ui/SeriesDialog";
+import SeriesDialog from "@/components/custom-ui/TVSeries/SeriesDialog";
+import FeaturedSeries from "@/components/custom-ui/TVSeries/FeaturedSeries";
+import type { Metadata } from "next";
+import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 
-export default function Series() {
+export const metadata: Metadata = {
+  title: "TedFlix - TV Series",
+};
+
+type Props = {
+  searchParams: Record<string, string> | null | undefined;
+};
+
+export default function Series({ searchParams }: Props) {
+  const modal = searchParams && searchParams.selectedShow;
   const seriesEndpoints = [
     {
       title: "Action & Adventure",
@@ -55,9 +65,9 @@ export default function Series() {
   ];
   return (
     <main>
-      <Wrapper endpoint="/tv/popular" />
+      <FeaturedSeries />
       <SlidersWrapper page="series" options={seriesEndpoints} />
-      <SeriesDialog />
+      {modal !== undefined && <SeriesDialog />}
     </main>
   );
 }

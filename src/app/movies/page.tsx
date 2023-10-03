@@ -1,6 +1,11 @@
-import SlidersWrapper from "@/components/custom-ui/Item/Wrapper";
+import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TedFlix - Movies",
+};
 
 type Props = {
   searchParams: Record<string, string> | null | undefined;
