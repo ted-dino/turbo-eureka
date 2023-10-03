@@ -1,4 +1,5 @@
 import axiosEndpoint from "@/lib/axiosEndpoint";
+import { Movie } from "@/types";
 
 export const getRandomMovie = async (endpoint: string) => {
   const randomMovie = await axiosEndpoint.get(endpoint, {
@@ -31,9 +32,11 @@ export const getMoviesByGenre = async (genre: string) => {
 export const getMovieById = async (id: number) => {
   const result = await axiosEndpoint.get(`/movie/${id}`, {
     params: {
-      append_to_response: "credits,similar,videos"
-    }
-  })
+      append_to_response: "credits,similar,videos",
+    },
+  });
 
-  return result.data
-}
+  const data: Movie = result.data;
+
+  return data;
+};
