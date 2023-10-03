@@ -26,6 +26,7 @@ export default function Wrapper({ options, page }: Props) {
           <Slider
             key={index}
             title={option.title}
+            type={option.type}
             queryFn={() => getMoviesByGenre(`${option.params}`)}
           />
         ))}

@@ -20,19 +20,19 @@ export default function MovieDialog() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const modal = searchParams.get("selectedShow");
+  const selectedShow = searchParams.get("selectedShow");
+  const id = selectedShow?.replace(/dHYgc2VyaWVz|bW92aWVz/g, "") || "";
+
   const { data: item } = useQuery({
-    queryKey: ["selected-movie", modal],
-    queryFn: () => getMovieById(Number(modal)),
+    queryKey: ["selected-movie", id],
+    queryFn: () => getMovieById(Number(id)),
     refetchOnWindowFocus: false,
   });
-
-  console.log(item);
 
   return (
     <>
       {item && (
-        <Dialog open={modal ? true : false} onOpenChange={() => router.back()}>
+        <Dialog open={id ? true : false} onOpenChange={() => router.back()}>
           <DialogContent className="bg-none">
             <DialogHeader>
               <DialogTitle className="mb-5">

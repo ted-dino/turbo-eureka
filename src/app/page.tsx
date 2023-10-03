@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function Home({ searchParams }: Props) {
-  const modal = searchParams && searchParams.type;
+  const selectedShow = searchParams && searchParams.selectedShow;
   const homeEndpoints = [
     {
       title: "Popular Movies",
@@ -36,8 +36,10 @@ export default function Home({ searchParams }: Props) {
     <main className="relative">
       <FeaturedMovie />
       <SlidersWrapper page="home" options={homeEndpoints} />
-      {modal === "movie" && <MovieDialog />}
-      {modal === "series" && <SeriesDialog />}
+      {selectedShow && selectedShow.includes("bW92aWVz") && <MovieDialog />}
+      {selectedShow && selectedShow.includes("dHYgc2VyaWVz") && (
+        <SeriesDialog />
+      )}
     </main>
   );
 }
