@@ -6,7 +6,7 @@ import { getSeriesByGenre } from "@/queryFns/series";
 import Slider from "./Slider";
 
 interface Props {
-  options: { title: string; params: string }[];
+  options: { title: string; params: string; type?: string }[];
   page: string;
 }
 export default function Wrapper({ options, page }: Props) {
@@ -17,6 +17,7 @@ export default function Wrapper({ options, page }: Props) {
           <Slider
             key={index}
             title={option.title}
+            type={option.type}
             queryFn={() => getList(`${option.params}`)}
           />
         ))}
