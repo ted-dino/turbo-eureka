@@ -18,7 +18,9 @@ export default function SimilarList({ similar, route = "movies" }: Props) {
             <Link
               href={`/${route ? route : "tv-series"}/info/${
                 similar.id
-              }/${normalizeURL(similar.title ? similar.title : similar.name!)}`}
+              }/${normalizeURL(similar.title ? similar.title : similar.name!)}${
+                route === "tv-series" ? "?season=1" : ""
+              }`}
               className="relative grid h-[150px] w-[150px] md:h-[330px] md:w-[217px]"
             >
               <Image

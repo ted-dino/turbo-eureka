@@ -6,8 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Button } from "../../ui/button";
 import ItemCard from "./Card";
-import useUIState from "@/store/uiState";
-import { Item, Result } from "@/types";
+import { Result } from "@/types";
 import { Skeleton } from "../../ui/skeleton";
 
 const PrevArrow = (props: CustomArrowProps) => {
@@ -65,20 +64,15 @@ const NextArrow = (props: CustomArrowProps) => {
 interface Props {
   queryFn: () => Promise<Result>;
   title: string;
+  type?: string;
 }
 
-export default function ItemsSlider({ title, queryFn }: Props) {
-  const { setShowModal, setItem } = useUIState();
+export default function ItemsSlider({ title, type, queryFn }: Props) {
   const { isLoading, isFetching, data } = useQuery({
     queryKey: ["slider-items", title],
     queryFn: queryFn,
     refetchOnWindowFocus: false,
   });
-
-  const setShowDialog = (item: Item) => {
-    setShowModal(true);
-    setItem(item);
-  };
 
   const settings = {
     dots: false,
@@ -149,9 +143,10 @@ export default function ItemsSlider({ title, queryFn }: Props) {
                 .map((item) => (
                   <ItemCard
                     key={item.id}
+                    id={item.id}
+                    type={type as string}
                     path={item.backdrop_path}
                     title={item.name ? item.name : item.title}
-                    handleClick={() => setShowDialog(item)}
                   />
                 ))}
           </Slider>

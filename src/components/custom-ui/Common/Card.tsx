@@ -24,6 +24,7 @@ export default function MovieCard({ id, type, path, title }: Props) {
               type === "movie" ? `bW92aWVz${id}` : `dHYgc2VyaWVz${id}`
             }`}
             scroll={false}
+            className="focus-visible:outline-none"
           >
             <Image
               src={getBackdropImg(path)}

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Movie, Similar } from "@/types";
-import MoviePlayer from "@/components/custom-ui/MoviePlayer";
-import SimilarList from "@/components/custom-ui/SimilarList";
+import MoviePlayer from "@/components/custom-ui/Movies/MoviePlayer";
+import SimilarList from "@/components/custom-ui/Common/SimilarList";
 
 type Props = {
   params: { id: number };

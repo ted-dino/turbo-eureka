@@ -8,12 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import Link from "next/link";
 import { Play } from "lucide-react";
-import Spinner from "./Spinner";
+import Spinner from "../Common/Spinner";
 import { FormEvent } from "react";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "../../ui/scroll-area";
 
 interface Props {
   series_id: number;
@@ -41,10 +41,11 @@ export default function EpisodeList({ series_id }: Props) {
 
   const { data: seasonItem, isLoading: seasonLoading } = seasonData;
   const { data: episodes, isLoading: epsLoading } = episodeData;
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
 
   const handleSeasonChange = (season: string) => {
     const EPS_ONE = 1;
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
+
     current.set(
       "season",
       season != undefined ? season : (seasonSearchParam as string),
@@ -61,7 +62,6 @@ export default function EpisodeList({ series_id }: Props) {
     const formData = new FormData(e.target as HTMLFormElement);
     const inputObject = Object.fromEntries(formData);
     const { episode_number } = inputObject;
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
     current.set("episode", episode_number.toString());
     const search = current.toString();
     const query = search ? `?${search}` : "";

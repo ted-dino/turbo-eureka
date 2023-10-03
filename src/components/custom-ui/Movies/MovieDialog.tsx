@@ -10,15 +10,14 @@ import {
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import { getBackdropImg, minsToHrs, normalizeURL } from "@/lib/utils";
 import Image from "next/legacy/image";
-import Buttons from "../Buttons";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import Buttons from "../Common/Buttons";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieById } from "@/queryFns/movie";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function MovieDialog() {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const selectedShow = searchParams.get("selectedShow");
   const id = selectedShow?.replace(/dHYgc2VyaWVz|bW92aWVz/g, "") || "";
@@ -95,7 +94,7 @@ export default function MovieDialog() {
                 </ul>
               </ul>
               <Buttons
-                playLink={`${pathname}/watch/${item.id}/${normalizeURL(
+                playLink={`/movies/watch/${item.id}/${normalizeURL(
                   item.title,
                 )}?source=0`}
                 infoLink="/info-link"

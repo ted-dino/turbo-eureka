@@ -1,4 +1,4 @@
-import SimilarList from "@/components/custom-ui/SimilarList";
+import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import { Button } from "@/components/ui/button";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import {

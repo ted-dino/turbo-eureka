@@ -1,5 +1,5 @@
-import SeriesPlayer from "@/components/custom-ui/SeriesPlayer";
-import SimilarList from "@/components/custom-ui/SimilarList";
+import SeriesPlayer from "@/components/custom-ui/TVSeries/SeriesPlayer";
+import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import { Series, Similar } from "@/types";
 import { Metadata } from "next";
 
@@ -58,7 +58,7 @@ export default async function Watch({ params }: { params: { id: number } }) {
   return (
     <main className="pt-16">
       <SeriesPlayer series_id={id} />
-      <SimilarList similar={similar} />
+      <SimilarList similar={similar} route="tv-series" />
     </main>
   );
 }

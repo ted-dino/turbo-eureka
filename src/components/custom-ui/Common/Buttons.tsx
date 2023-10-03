@@ -6,7 +6,7 @@ interface Props {
   infoLink: string;
 }
 
-export default function Buttons({ playLink,infoLink }: Props) {
+export default function Buttons({ playLink, infoLink }: Props) {
   return (
     <div className="flex items-center space-x-3">
       <Link

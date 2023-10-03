@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { notFound, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import EpisodeList from "./EpisodeList";
 
@@ -11,9 +11,9 @@ interface Props {
 export default function SeriesPlayer({ series_id }: Props) {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const sourceSearchParam = searchParams.get("source");
-  const seasonSearchParam = searchParams.get("season");
-  const episodeSearchParam = searchParams.get("episode");
+  const sourceSearchParam = Number(searchParams.get("source"));
+  const seasonSearchParam = Number(searchParams.get("season"));
+  const episodeSearchParam = Number(searchParams.get("episode"));
 
   const streamUrls = [
     process.env.NEXT_PUBLIC_STREAM_URL_ONE,
@@ -21,6 +21,14 @@ export default function SeriesPlayer({ series_id }: Props) {
     process.env.NEXT_PUBLIC_STREAM_URL_THREE,
     process.env.NEXT_PUBLIC_STREAM_URL_FOUR,
   ] as string[];
+
+  if (
+    isNaN(sourceSearchParam) ||
+    sourceSearchParam < 0 ||
+    sourceSearchParam >= streamUrls.length
+  ) {
+    return notFound();
+  }
 
   return (
     <section>
@@ -72,9 +80,7 @@ export default function SeriesPlayer({ series_id }: Props) {
           {streamUrls.map((url, index) => (
             <li
               className={`py-2 px-4 rounded-md ${
-                sourceSearchParam === index.toString()
-                  ? "bg-[#292929]/30"
-                  : "bg-[#292929]"
+                sourceSearchParam === index ? "bg-[#292929]/30" : "bg-[#292929]"
               }`}
               key={index}
             >

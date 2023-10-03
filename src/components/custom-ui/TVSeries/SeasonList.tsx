@@ -11,28 +11,49 @@ import { getSeasonById } from "@/queryFns/series";
 import { SeasonElement } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { Play } from "lucide-react";
-import { useState } from "react";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../ui/skeleton";
 import Link from "next/link";
+import { normalizeURL } from "@/lib/utils";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 interface Props {
+  seasonName: string;
+  seasonIds: number;
   seriesId: number;
   seasonArray: SeasonElement[];
 }
 
-export const SeasonList = ({ seriesId, seasonArray }: Props) => {
-  const [seasonId, setSeasonId] = useState(seasonArray[0].season_number);
+export const SeasonList = ({
+  seasonName,
+  seasonIds,
+  seriesId,
+  seasonArray,
+}: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const seasonSearchParam = searchParams.get("season");
   const { data: seasons } = useQuery({
-    queryKey: ["seasons-list", seasonId],
-    queryFn: () => getSeasonById(seriesId, seasonId),
+    queryKey: ["seasons-list", seasonSearchParam],
+    queryFn: () => getSeasonById(seriesId, Number(seasonSearchParam)),
     refetchOnWindowFocus: false,
   });
+
+  console.log(seasonSearchParam);
+
+  const handleSeasonChange = (season: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    current.set("season", season);
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.push(`${pathname}${query}`, { scroll: false });
+  };
 
   return (
     <>
       <Select
-        defaultValue={`${seasonId}`}
-        onValueChange={(value) => setSeasonId(Number(value))}
+        defaultValue={`${seasonSearchParam}`}
+        onValueChange={(value) => handleSeasonChange(value)}
       >
         <SelectTrigger className="w-max">
           <SelectValue placeholder={`${seasonArray[0].name}`} />
@@ -53,7 +74,14 @@ export const SeasonList = ({ seriesId, seasonArray }: Props) => {
                 className="py-2 px-4 bg-[#292929] rounded-md cursor-pointer"
                 key={season.id}
               >
-                <Link href="#" className="flex items-center gap-x-2 ">
+                <Link
+                  href={`/tv-series/watch/${seasonIds}/${normalizeURL(
+                    seasonName,
+                  )}?source=0&season=${seasonSearchParam}&episode=${
+                    season.episode_number
+                  }`}
+                  className="flex items-center gap-x-2 "
+                >
                   <div className="w-5">
                     <Play size={20} />
                   </div>

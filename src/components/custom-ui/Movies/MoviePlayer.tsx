@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { notFound, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 export default function VideoPlayer({ video_id }: Props) {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const sourceSearchParam = searchParams.get("source");
+  const sourceSearchParam = Number(searchParams.get("source"));
 
   const streamUrls = [
     process.env.NEXT_PUBLIC_STREAM_URL_ONE,
@@ -19,9 +19,17 @@ export default function VideoPlayer({ video_id }: Props) {
     process.env.NEXT_PUBLIC_STREAM_URL_FOUR,
   ] as string[];
 
+  if (
+    isNaN(sourceSearchParam) ||
+    sourceSearchParam < 0 ||
+    sourceSearchParam >= streamUrls.length
+  ) {
+    return notFound();
+  }
+
   return (
     <section>
-      {Number(sourceSearchParam) === 0 && (
+      {sourceSearchParam === 0 && (
         <iframe
           allowFullScreen
           id="series-iframe"
@@ -29,7 +37,7 @@ export default function VideoPlayer({ video_id }: Props) {
           className="w-full h-[calc(100vh-40px)]"
         />
       )}
-      {Number(sourceSearchParam) === 1 && (
+      {sourceSearchParam === 1 && (
         <iframe
           allowFullScreen
           id="series-iframe"
@@ -37,7 +45,7 @@ export default function VideoPlayer({ video_id }: Props) {
           className="w-full h-[calc(100vh-40px)]"
         />
       )}
-      {Number(sourceSearchParam) === 2 && (
+      {sourceSearchParam === 2 && (
         <iframe
           allowFullScreen
           id="series-iframe"
@@ -45,7 +53,7 @@ export default function VideoPlayer({ video_id }: Props) {
           className="w-full h-[calc(100vh-40px)]"
         />
       )}
-      {Number(sourceSearchParam) === 3 && (
+      {sourceSearchParam === 3 && (
         <iframe
           allowFullScreen
           id="series-iframe"
@@ -62,9 +70,7 @@ export default function VideoPlayer({ video_id }: Props) {
           {streamUrls.map((url, index) => (
             <li
               className={`py-2 px-4 rounded-md ${
-                sourceSearchParam === index.toString()
-                  ? "bg-[#292929]/30"
-                  : "bg-[#292929]"
+                sourceSearchParam === index ? "bg-[#292929]/30" : "bg-[#292929]"
               }`}
               key={index}
             >

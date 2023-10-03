@@ -1,4 +1,4 @@
-import { SeasonList } from "@/components/custom-ui/SeasonList";
+import { SeasonList } from "@/components/custom-ui/TVSeries/SeasonList";
 import { Button } from "@/components/ui/button";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import { formatDate, getBackdropImg, normalizeURL } from "@/lib/utils";
@@ -8,7 +8,7 @@ import { default as NextImage } from "next/image";
 import { default as ImageLegacy } from "next/legacy/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import SimilarList from "@/components/custom-ui/SimilarList";
+import SimilarList from "@/components/custom-ui/Common/SimilarList";
 
 type Props = {
   params: { id: number };
@@ -188,7 +188,12 @@ export default async function Page({ params }: { params: { id: number } }) {
         </div>
       </section>
       <section className="mx-5 lg:mx-0 p-10 rounded-md bg-[#292929]/40 max-h-96 overflow-y-scroll">
-        <SeasonList seriesId={data.id} seasonArray={data.seasons} />
+        <SeasonList
+          seasonName={data.name}
+          seasonIds={data.id}
+          seriesId={data.id}
+          seasonArray={data.seasons}
+        />
       </section>
       <SimilarList similar={data.similar} route="tv-series" />
     </main>

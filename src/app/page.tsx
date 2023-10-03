@@ -1,7 +1,7 @@
-import SlidersWrapper from "@/components/custom-ui/Item/Wrapper";
+import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
-import SeriesDialog from "@/components/custom-ui/SeriesDialog";
+import SeriesDialog from "@/components/custom-ui/TVSeries/SeriesDialog";
 
 type Props = {
   searchParams: Record<string, string> | null | undefined;
