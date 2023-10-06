@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../../ui/skeleton";
 import { useSearchParams, useRouter } from "next/navigation";
 import Buttons from "../Common/Buttons";
+import Link from "next/link";
 
 export default function SeriesDialog() {
   const router = useRouter();
@@ -83,9 +84,11 @@ export default function SeriesDialog() {
                     <li className="flex items-center gap-x-1">
                       <strong className="mr-1 text-white">Genre:</strong>
                       {series.genres.map((genre, index) => (
-                        <span key={genre.id}>
-                          {genre.name}
-                          {index < series.genres.length - 1 && ","}
+                        <span key={genre.id} className="hover:underline">
+                          <Link href={`/genre/movie/${genre.id}?page=1`}>
+                            {genre.name}
+                            {index < series.genres.length - 1 && ","}
+                          </Link>
                         </span>
                       ))}
                     </li>

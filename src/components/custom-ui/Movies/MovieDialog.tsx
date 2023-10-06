@@ -15,6 +15,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieById } from "@/queryFns/movie";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function MovieDialog() {
   const router = useRouter();
@@ -34,13 +35,11 @@ export default function MovieDialog() {
         <Dialog open={id ? true : false} onOpenChange={() => router.back()}>
           <DialogContent className="bg-none">
             <DialogHeader>
-              <DialogTitle className="mb-5">
-                {item.name ? item.name : item.title}
-              </DialogTitle>
+              <DialogTitle className="mb-5">{item.title}</DialogTitle>
               <Image
                 className="rounded"
                 src={getBackdropImg(item.backdrop_path)}
-                alt={item.name ? item.name : item.title}
+                alt={item.title}
                 width={625}
                 height={350}
                 placeholder="blur"
@@ -59,9 +58,11 @@ export default function MovieDialog() {
                         <strong className="mr-1 text-white">Genres:</strong>
                         <ul className="flex gap-x-1">
                           {item.genres.map((genre, index) => (
-                            <li key={genre.id}>
-                              {genre.name}
-                              {index < item.genres.length - 1 && ","}
+                            <li key={genre.id} className="hover:underline">
+                              <Link href={`/genre/movie/${genre.id}?page=1`}>
+                                {genre.name}
+                                {index < item.genres.length - 1 && ","}
+                              </Link>
                             </li>
                           ))}
                         </ul>

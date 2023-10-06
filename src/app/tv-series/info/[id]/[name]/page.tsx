@@ -144,9 +144,11 @@ export default async function Page({ params }: { params: { id: number } }) {
                 <span className="font-bold mr-1">Genres:</span>
                 <ul className="flex gap-x-1">
                   {data.genres.map((genre, index) => (
-                    <li key={genre.id}>
-                      {genre.name}
-                      {index < data.genres.length - 1 && ","}
+                    <li key={genre.id} className="hover:underline">
+                      <Link href={`/genre/tv/${genre.id}?page=1`}>
+                        {genre.name}
+                        {index < data.genres.length - 1 && ","}
+                      </Link>
                     </li>
                   ))}
                 </ul>
