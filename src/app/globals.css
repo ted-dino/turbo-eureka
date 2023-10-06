@@ -52,7 +52,6 @@
   }
   .slider-title:hover {
     padding-right: 50px;
-    /* padding-left: 8px; */
   }
   .slider-title:hover::after {
     opacity: 1;
