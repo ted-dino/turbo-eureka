@@ -2,6 +2,7 @@ import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
 import SeriesDialog from "@/components/custom-ui/TVSeries/SeriesDialog";
+import { homeEndpoints } from "@/data/endpoints";
 
 type Props = {
   searchParams: Record<string, string> | null | undefined;
@@ -9,28 +10,6 @@ type Props = {
 
 export default function Home({ searchParams }: Props) {
   const selectedShow = searchParams && searchParams.selectedShow;
-  const homeEndpoints = [
-    {
-      title: "Popular Movies",
-      params: "/movie/popular",
-      type: "movie",
-    },
-    {
-      title: "Top Rated Movies",
-      params: "/movie/top_rated",
-      type: "movie",
-    },
-    {
-      title: "Popular Series",
-      params: "/tv/popular",
-      type: "series",
-    },
-    {
-      title: "Top Rated Series",
-      params: "/tv/top_rated",
-      type: "series",
-    },
-  ];
 
   return (
     <main className="relative">

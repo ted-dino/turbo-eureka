@@ -1,69 +1,51 @@
 import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
+import { moviesEndpoints } from "@/data/endpoints";
+import { Movie } from "@/types";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "TedFlix - Movies",
+type Propss = {
+  searchParams: Record<string, string> | null | undefined;
 };
+export async function generateMetadata({
+  searchParams,
+}: Propss): Promise<Metadata> {
+  const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
+  const TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN as string;
+  const modal = searchParams && searchParams.selectedShow;
+  const id = modal?.replace(/dHYgc2VyaWVz|bW92aWVz/g, "") || "";
 
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  };
+  const res = await fetch(
+    `${TMBD_URL}/movie/${id}?language=en-US&page=1`,
+    options,
+  );
+  const movie: Movie = await res.json();
+  return {
+    title: `TedFlix - ${
+      searchParams && searchParams.selectedShow ? `${movie.title}` : "Test"
+    }`,
+    description: movie.overview,
+  };
+}
 type Props = {
   searchParams: Record<string, string> | null | undefined;
 };
 
 export default function Movies({ searchParams }: Props) {
   const modal = searchParams && searchParams.selectedShow;
-  const moviesEndpoints = [
-    {
-      title: "Action",
-      params: "28",
-      type: "movie",
-    },
-    {
-      title: "Comedy",
-      params: "35",
-      type: "movie",
-    },
-    {
-      title: "Documentary",
-      params: "99",
-      type: "movie",
-    },
-    {
-      title: "Family",
-      params: "10751",
-      type: "movie",
-    },
-    {
-      title: "History",
-      params: "36",
-      type: "movie",
-    },
-    {
-      title: "Horror",
-      params: "27",
-      type: "movie",
-    },
-    {
-      title: "Science Fiction",
-      params: "878",
-      type: "movie",
-    },
-    {
-      title: "War",
-      params: "10752",
-      type: "movie",
-    },
-    {
-      title: "Western",
-      params: "37",
-      type: "movie",
-    },
-  ];
+
   return (
     <main>
       <FeaturedMovie />
-      <SlidersWrapper page="movies" options={moviesEndpoints} />
+      <SlidersWrapper page="movies" options={moviesEndpoints.slice(0, 9)} />
       {modal !== undefined && <MovieDialog />}
     </main>
   );
