@@ -130,19 +130,19 @@ export default function ItemsSlider({ title, type, params, queryFn }: Props) {
     <>
       {isFetching || isLoading ? (
         <>
-          <section className="mb-3 pl-14">
-            <Skeleton className="h-12 w-32 md:w-40 lg:w-44" />
+          <section>
+            <Skeleton className="ml-14 mb-3 h-12 w-32 md:w-40 lg:w-44" />
+            <div className="grid gap-x-3 grid-cols-6">
+              {Array(6)
+                .fill("")
+                .map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="h-24 w-32 md:w-40 lg:w-[292px] lg:h-[164px] rounded"
+                  />
+                ))}
+            </div>
           </section>
-          <div className={`grid gap-x-3 grid-cols-6`}>
-            {Array(6)
-              .fill("")
-              .map((_, index) => (
-                <Skeleton
-                  key={index}
-                  className="h-24 w-32 md:w-40 lg:w-44 rounded"
-                />
-              ))}
-          </div>
         </>
       ) : (
         <section>
