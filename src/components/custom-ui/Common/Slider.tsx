@@ -5,9 +5,11 @@ import Slider, { CustomArrowProps } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Button } from "../../ui/button";
-import ItemCard from "./Card";
+import SliderItem from "./SliderItem";
 import { Result } from "@/types";
 import { Skeleton } from "../../ui/skeleton";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const PrevArrow = (props: CustomArrowProps) => {
   return (
@@ -65,9 +67,11 @@ interface Props {
   queryFn: () => Promise<Result>;
   title: string;
   type?: string;
+  params: string;
 }
 
-export default function ItemsSlider({ title, type, queryFn }: Props) {
+export default function ItemsSlider({ title, type, params, queryFn }: Props) {
+  const pathname = usePathname();
   const { isLoading, isFetching, data } = useQuery({
     queryKey: ["slider-items", title],
     queryFn: queryFn,
@@ -112,13 +116,23 @@ export default function ItemsSlider({ title, type, queryFn }: Props) {
     ],
   };
 
+  const getRoute = (param: string) => {
+    if (pathname.includes("movies")) {
+      return `/genre/movie/${param}`;
+    } else if (pathname.includes("tv-series")) {
+      return `/genre/tv/${param}`;
+    } else {
+      return `/genre${param}`;
+    }
+  };
+
   return (
     <>
       {isFetching || isLoading ? (
         <>
-          <div className="mb-3 pl-14">
+          <section className="mb-3 pl-14">
             <Skeleton className="h-12 w-32 md:w-40 lg:w-44" />
-          </div>
+          </section>
           <div className={`grid gap-x-3 grid-cols-6`}>
             {Array(6)
               .fill("")
@@ -131,9 +145,14 @@ export default function ItemsSlider({ title, type, queryFn }: Props) {
           </div>
         </>
       ) : (
-        <div>
-          <h2 className="slider-title mb-3 pl-14 text-2xl font-bold md:text-4xl lg:text-5xl cursor-pointer">
-            {title}
+        <section>
+          <h2 className="mb-3 pl-14 ">
+            <Link
+              href={`${getRoute(params)}?page=1`}
+              className="slider-title text-2xl font-bold md:text-4xl lg:text-5xl"
+            >
+              {title}
+            </Link>
           </h2>
           <Slider className="my-slider relative bg-transparent" {...settings}>
             {data &&
@@ -141,7 +160,7 @@ export default function ItemsSlider({ title, type, queryFn }: Props) {
               data.results
                 .slice(0, 10)
                 .map((item) => (
-                  <ItemCard
+                  <SliderItem
                     key={item.id}
                     id={item.id}
                     type={type as string}
@@ -150,7 +169,7 @@ export default function ItemsSlider({ title, type, queryFn }: Props) {
                   />
                 ))}
           </Slider>
-        </div>
+        </section>
       )}
     </>
   );

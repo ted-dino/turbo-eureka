@@ -3,8 +3,9 @@ import { Dialog, DialogTrigger } from "../../ui/dialog";
 import { getBackdropImg } from "@/lib/utils";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
+import Spinner from "./Spinner";
 interface Props {
   id: number;
   type: string;
@@ -12,11 +13,23 @@ interface Props {
   title: string;
 }
 
-export default function MovieCard({ id, type, path, title }: Props) {
+export default function SliderItem({ id, type, path, title }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const setTransition = () => {
+    startTransition(() => {
+      router.push(
+        `${pathname}?selectedShow=${
+          type === "movie" ? `bW92aWVz${id}` : `dHYgc2VyaWVz${id}`
+        }`,
+      );
+    });
+  };
 
   return (
-    <div className="card-item pl-2 cursor-pointer">
+    <div className="relative card-item pl-2 cursor-pointer">
       <Dialog>
         <DialogTrigger asChild>
           <Link
@@ -25,6 +38,7 @@ export default function MovieCard({ id, type, path, title }: Props) {
             }`}
             scroll={false}
             className="focus-visible:outline-none"
+            onClick={setTransition}
           >
             <Image
               src={getBackdropImg(path)}
@@ -36,8 +50,9 @@ export default function MovieCard({ id, type, path, title }: Props) {
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(625, 350),
               )}`}
-              className="rounded-lg object-cover"
+              className={`rounded-lg object-cover ${isPending && "blur-sm"}`}
             />
+            {isPending && <Spinner />}
           </Link>
         </DialogTrigger>
       </Dialog>
