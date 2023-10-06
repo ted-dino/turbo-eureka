@@ -32,8 +32,8 @@ export default function SeriesPlayer({ series_id }: Props) {
 
   return (
     <section>
-      <div className="flex flex-col md:flex-row gap-x-3 h-[calc(90vh-40px)]">
-        <div className="order-2 md:-order-1 ml-1 w-full md:max-w-[250px] bg-[#292929]/40 h-full max-h-[827px] overflow-y-scroll">
+      <div className="flex flex-col md:flex-row gap-x-3 h-[calc(95vh-40px)]">
+        <div className="order-2 md:-order-1 ml-1 w-full md:max-w-[250px] bg-[#292929]/40 h-full overflow-y-scroll">
           <EpisodeList series_id={series_id} />
         </div>
         <div className="relative w-full">
