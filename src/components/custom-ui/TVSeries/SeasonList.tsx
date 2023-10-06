@@ -15,6 +15,7 @@ import { Skeleton } from "../../ui/skeleton";
 import Link from "next/link";
 import { normalizeURL } from "@/lib/utils";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {
   seasonName: string;
@@ -59,11 +60,13 @@ export const SeasonList = ({
           <SelectValue placeholder={`${seasonArray[0].name}`} />
         </SelectTrigger>
         <SelectContent>
-          {seasonArray.map((season) => (
-            <SelectItem key={season.id} value={`${season.season_number}`}>
-              {season.name}
-            </SelectItem>
-          ))}
+          <ScrollArea className="h-60">
+            {seasonArray.map((season) => (
+              <SelectItem key={season.id} value={`${season.season_number}`}>
+                {season.name}
+              </SelectItem>
+            ))}
+          </ScrollArea>
         </SelectContent>
       </Select>
       <ul className="my-5 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-3 gap-x-4">
