@@ -13,7 +13,6 @@ import Link from "next/link";
 import { Play } from "lucide-react";
 import Spinner from "../Common/Spinner";
 import { FormEvent } from "react";
-import { ScrollArea } from "../../ui/scroll-area";
 
 interface Props {
   series_id: number;
