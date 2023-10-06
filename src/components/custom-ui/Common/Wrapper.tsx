@@ -6,7 +6,7 @@ import { getSeriesByGenre } from "@/queryFns/series";
 import Slider from "./Slider";
 
 interface Props {
-  options: { title: string; params: string; type?: string }[];
+  options: { title: string; params: string; type?: string; genre?: string }[];
   page: string;
 }
 export default function Wrapper({ options, page }: Props) {
@@ -18,6 +18,7 @@ export default function Wrapper({ options, page }: Props) {
             key={index}
             title={option.title}
             type={option.type}
+            params={option.params}
             queryFn={() => getList(`${option.params}`)}
           />
         ))}
@@ -27,6 +28,7 @@ export default function Wrapper({ options, page }: Props) {
             key={index}
             title={option.title}
             type={option.type}
+            params={`${option.params}`}
             queryFn={() => getMoviesByGenre(`${option.params}`)}
           />
         ))}
@@ -35,6 +37,7 @@ export default function Wrapper({ options, page }: Props) {
           <Slider
             key={index}
             title={option.title}
+            params={`${option.params}`}
             queryFn={() => getSeriesByGenre(`${option.params}`)}
           />
         ))}
