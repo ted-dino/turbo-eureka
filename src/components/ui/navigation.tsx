@@ -1,14 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { Search } from "lucide-react";
 import MobileMenu from "./mobile-menu";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import menu from "@/data/menu";
+import SearchInput from "../custom-ui/Common/SearchInput";
 
 const Navigation = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const ref = useRef<HTMLLIElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
 
   const TOP_OFFSET = 66;
 
@@ -28,12 +31,26 @@ const Navigation = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isFocused]);
+
   const toggleMobileMenu = useCallback(() => {
     setShowMobileMenu((prevState) => !prevState);
   }, []);
 
   return (
-    <nav className={`w-full fixed z-10`}>
+    <nav className={`w-full fixed z-10 top-0`}>
       <div
         className={`px-10 flex items-center transition ${
           showBackground ? "bg-zinc-900 bg-opacity-90" : ""
@@ -69,8 +86,19 @@ const Navigation = () => {
           </ul>
 
           <ul className="ml-auto flex items-center space-x-4">
-            <li className="nav-item">
-              <Search className="cursor-pointer" />
+            <li
+              ref={ref}
+              className="nav-item relative"
+              onClick={() => {
+                setIsFocused(true);
+                searchInput.current?.focus();
+              }}
+            >
+              <SearchInput
+                isFocused={isFocused}
+                searchInput={searchInput}
+                setIsFocused={setIsFocused}
+              />
             </li>
             <li className="nav-item">Login</li>
           </ul>
