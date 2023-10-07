@@ -40,8 +40,6 @@ export const SeasonList = ({
     refetchOnWindowFocus: false,
   });
 
-  console.log(seasonSearchParam);
-
   const handleSeasonChange = (season: string) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
     current.set("season", season);
