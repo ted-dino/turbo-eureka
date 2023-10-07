@@ -144,10 +144,12 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p className="text-sm md:text-base">{data.overview}</p>
           </div>
           <ul className="text-sm md:text-base">
-            <li>
-              <strong className="mr-1">Release Date:</strong>{" "}
-              {formatDate(data.release_date, "long")}
-            </li>
+            {data.release_date && (
+              <li>
+                <strong className="mr-1">Release Date:</strong>{" "}
+                {formatDate(data.release_date, "long")}
+              </li>
+            )}
             <li className="flex">
               <strong className="mr-1">Genres:</strong>
               <ul className="flex gap-x-1">
