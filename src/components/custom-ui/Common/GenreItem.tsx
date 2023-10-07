@@ -24,19 +24,27 @@ export default function GenreItem({ link, path, title }: Props) {
   };
 
   return (
-    <Link href={`${link}`} onClick={setTransition}>
-      <Image
-        src={getBackdropImg(path)}
-        alt={title}
-        width={300}
-        height={150}
-        priority
-        placeholder="blur"
-        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(625, 350))}`}
-        className={`rounded-lg object-cover ${isPending && "blur-sm"}`}
-      />
-      {isPending && <Spinner />}
-      <h2>{title}</h2>
-    </Link>
+    <>
+      <Link
+        className="relative flex flex-col"
+        href={`${link}`}
+        onClick={setTransition}
+      >
+        <Image
+          src={getBackdropImg(path)}
+          alt={title}
+          width={300}
+          height={150}
+          priority
+          placeholder="blur"
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            shimmer(625, 350),
+          )}`}
+          className={`mb-2 rounded-lg object-cover ${isPending && "blur-sm"}`}
+        />
+        {isPending && <Spinner />}
+      </Link>
+      <p className="">{title}</p>
+    </>
   );
 }
