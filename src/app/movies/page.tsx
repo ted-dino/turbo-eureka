@@ -30,7 +30,7 @@ export async function generateMetadata({
   const movie: Movie = await res.json();
   return {
     title: `TedFlix - ${
-      searchParams && searchParams.selectedShow ? `${movie.title}` : "Test"
+      searchParams && searchParams.selectedShow ? `${movie.title}` : "Movies"
     }`,
     description: movie.overview,
   };
