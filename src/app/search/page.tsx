@@ -70,7 +70,7 @@ export default async function Page({ searchParams }: Props) {
   return (
     <main className="mt-[85px] lg:container mx-auto min-h-screen">
       <h1 className="mb-5 text-xl lg:text-4xl capitalize font-bold">
-        {movie.length > 0 && series.length > 0
+        {movie.length > 0 || series.length > 0
           ? `Search result for ${query}`
           : `No result for ${query}`}
       </h1>
