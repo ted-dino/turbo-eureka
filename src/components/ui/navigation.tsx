@@ -5,8 +5,11 @@ import MobileMenu from "./mobile-menu";
 import { useCallback, useEffect, useState, useRef } from "react";
 import menu from "@/data/menu";
 import SearchInput from "../custom-ui/Common/SearchInput";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navigation = () => {
+  const pathname = usePathname();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -100,7 +103,9 @@ const Navigation = () => {
                 setIsFocused={setIsFocused}
               />
             </li>
-            <li className="nav-item">Login</li>
+            <li className="nav-item">
+              <Link href={`${pathname}?showLogin=true`}>Login</Link>
+            </li>
           </ul>
         </div>
       </div>
