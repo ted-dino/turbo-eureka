@@ -31,3 +31,6 @@ export default function RootLayout({
     </QueryProvider>
   );
 }
+
+export const runtime = "edge";
+export const preferredRegion = "syd1";
