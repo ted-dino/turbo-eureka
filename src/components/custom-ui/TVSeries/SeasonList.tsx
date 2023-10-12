@@ -57,8 +57,8 @@ export const SeasonList = ({
         <SelectTrigger className="w-max">
           <SelectValue placeholder={`${seasonArray[0].name}`} />
         </SelectTrigger>
-        <SelectContent>
-          <ScrollArea className="h-60">
+        <SelectContent className="max-h-60">
+          <ScrollArea className="h-full">
             {seasonArray.map((season) => (
               <SelectItem key={season.id} value={`${season.season_number}`}>
                 {season.name}
