@@ -93,7 +93,7 @@ export default async function Page({ searchParams }: Props) {
                 <GenreItem
                   link={`/tv-series/info/${item.id}/${normalizeURL(
                     item.name!,
-                  )}`}
+                  )}?source=0&season=1&episode=1`}
                   path={item.backdrop_path}
                   title={item.name ? item.name : item.title}
                 />
