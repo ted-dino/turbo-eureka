@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "migrations": "npx drizzle-kit generate:pg --config=drizzle.config.json"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.3",
     "@hookform/resolvers": "^3.3.1",
     "@neondatabase/serverless": "^0.6.0",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -23,11 +25,13 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^4.32.6",
     "@types/node": "20.4.4",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "@types/react-slick": "^0.23.10",
+    "argon2": "^0.31.1",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
@@ -35,9 +39,9 @@
     "drizzle-orm": "^0.28.6",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
+    "jose": "^4.15.3",
     "lucide-react": "^0.263.0",
     "next": "^13.4.13",
-    "next-auth": "^4.23.2",
     "postcss": "^8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",

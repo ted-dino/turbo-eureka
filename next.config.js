@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ["image.tmdb.org",],
+  experimental: {
+    serverActions: true,
+    serverComponentsExternalPackages: ["argon2"],
   },
+  images: {
+    domains: ["image.tmdb.org", "api.dicebear.com"],
+  },
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
