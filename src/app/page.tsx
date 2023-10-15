@@ -1,3 +1,4 @@
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
@@ -8,7 +9,7 @@ type Props = {
   searchParams: Record<string, string> | null | undefined;
 };
 
-export default function Home({ searchParams }: Props) {
+export default async function Home({ searchParams }: Props) {
   const selectedShow = searchParams && searchParams.selectedShow;
 
   return (
@@ -19,6 +20,7 @@ export default function Home({ searchParams }: Props) {
       {selectedShow && selectedShow.includes("dHYgc2VyaWVz") && (
         <SeriesDialog />
       )}
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }
