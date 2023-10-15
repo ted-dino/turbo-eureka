@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navigation from "@/components/ui/navigation";
 import QueryProvider from "@/QueryProvider";
 import Footer from "../components/custom-ui/Common/Footer";
+import { getUserSession } from "@/lib/session";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -12,17 +13,18 @@ export const metadata: Metadata = {
     "We're no strangers to love You know the rules and so do I A full commitment's what I'm thinking of You wouldn't get this from any other guy",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getUserSession();
   return (
     <QueryProvider>
       <html lang="en">
         <body className={inter.className}>
           <div className="shadow-banner relative h-screen lg:h-[140vh]">
-            <Navigation />
+            <Navigation user={user as string} />
             {children}
             <Footer />
           </div>
@@ -31,6 +33,3 @@ export default function RootLayout({
     </QueryProvider>
   );
 }
-
-export const runtime = "edge";
-export const preferredRegion = "syd1";
