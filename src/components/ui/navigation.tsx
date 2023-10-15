@@ -6,17 +6,25 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import menu from "@/data/menu";
 import SearchInput from "../custom-ui/Common/SearchInput";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import LogoutButton from "../custom-ui/AuthPanel/LogoutButton";
+import { updateParams } from "@/lib/utils";
 
-const Navigation = () => {
+interface Props {
+  user: string | null;
+}
+
+const Navigation = ({ user }: Props) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
-
   const TOP_OFFSET = 66;
+
+  const newHref = updateParams(pathname, searchParams, "isLogin");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,7 +112,13 @@ const Navigation = () => {
               />
             </li>
             <li className="nav-item">
-              <Link href={`${pathname}?showLogin=true`}>Login</Link>
+              {user ? (
+                <LogoutButton user={user} />
+              ) : (
+                <Link href={`${newHref}`} scroll={false}>
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>

@@ -23,15 +23,14 @@ import { Button } from "@/components/ui/button";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { register } from "@/queryFns/user";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-const formSchema = z
+export const registerSchema = z
   .object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
-    //.refine(async (e) => {
-    // Where checkIfEmailIsValid makes a request to the backend
-    // to see if the email is valid.
-    // return await checkIfEmailIsValid(e);
-    // }, "This email is not in our database")
     password: z
       .string()
       .min(8, {
@@ -62,16 +61,46 @@ const formSchema = z
   });
 
 export default function RegisterForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+  });
+  const { mutate, isLoading, error } = useMutation({
+    mutationKey: ["register-user"],
+    mutationFn: (variables: {
+      email: string;
+      password: string;
+      confirmPassword: string;
+    }) =>
+      createAccount(
+        variables.email,
+        variables.password,
+        variables.confirmPassword,
+      ),
+    onSuccess: () => {
+      const current = new URLSearchParams(Array.from(searchParams.entries()));
+      current.delete("showLogin");
+      const search = current.toString();
+      router.refresh();
+      router.push(`${pathname}?${search}`);
+    },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const createAccount = async (
+    email: string,
+    password: string,
+    confirmPassword: string,
+  ) => {
+    const response = await register(email, password, confirmPassword);
+    return response;
+  };
+
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    const { email, password, confirmPassword } = values;
+    mutate({ email, password, confirmPassword });
+  };
 
   return (
     <Card>
@@ -99,6 +128,11 @@ export default function RegisterForm() {
                     />
                   </FormControl>
                   <FormMessage />
+                  {error instanceof Error && (
+                    <FormMessage>
+                      Email is already taken. Please try again.
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />
@@ -149,8 +183,15 @@ export default function RegisterForm() {
                 </FormItem>
               )}
             />
-            <Button className="mt-3 w-full" type="submit">
-              Submit
+            <Button className="mt-3 w-full" type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                "Sign up"
+              )}
             </Button>
           </form>
         </Form>
