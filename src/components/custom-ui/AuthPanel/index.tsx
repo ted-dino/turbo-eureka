@@ -25,9 +25,7 @@ export default function AuthPanel({ showLogin }: Props) {
             <LoginForm />
           </TabsContent>
           <TabsContent value="register">
-            <>
-              <RegisterForm />
-            </>
+            <RegisterForm />
           </TabsContent>
         </Tabs>
       </DialogContent>
