@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -46,3 +47,35 @@ export function minsToHrs(minutes: number) {
     } and ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
   }
 }
+
+export const updateParams = (
+  pathname: string,
+  searchParams: ReadonlyURLSearchParams,
+  isLogin?: string,
+) => {
+  const queryParams = [];
+
+  searchParams.forEach((value, key) => {
+    if (!(isLogin && key === "showLogin")) {
+      queryParams.push(`${key}=${value}`);
+    }
+  });
+
+  if (isLogin) {
+    queryParams.push("showLogin=true");
+  }
+
+  const queryString = queryParams.join("&");
+
+  return `${pathname}?${queryString}`;
+};
+
+export const returnToRoute = (
+  pathname: string,
+  searchParams: ReadonlyURLSearchParams,
+) => {
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
+  current.delete("showLogin");
+  const search = current.toString();
+  return `${pathname}?${search}`;
+};
