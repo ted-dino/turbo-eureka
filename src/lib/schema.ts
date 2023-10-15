@@ -23,3 +23,20 @@ export const users = pgTable(
     };
   },
 );
+
+export const shows = pgTable(
+  "shows",
+  {
+    id: serial("id").primaryKey().notNull(),
+    showId: integer("show_id"),
+    posterPath: text("poster_path").notNull(),
+    title: text("title").notNull(),
+    userId: integer("user_id").references(() => users.id),
+    createdAt: timestamp("created_at").defaultNow(),
+  },
+  (shows) => {
+    return {
+      titleIndex: uniqueIndex("title_idx").on(shows.id),
+    };
+  },
+);
