@@ -9,9 +9,7 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     const { email, password } = data;
 
-    const isValidData = email && password;
-
-    if (!isValidData || !data) {
+    if (!email || !password) {
       return NextResponse.json(
         { message: "Email and Password are required!" },
         { status: 400 },
@@ -19,39 +17,33 @@ export async function POST(request: NextRequest) {
     }
 
     const dbResponse = await getUserByEmail(email);
-    if (!dbResponse) {
+
+    if (!dbResponse || !dbResponse[0]) {
       return NextResponse.json(
-        { message: "No found user. Please sign up." },
+        { message: "No user found. Please sign up." },
         { status: 400 },
       );
     }
 
     const user = dbResponse[0];
-    if (!user) {
-      return NextResponse.json(
-        { message: "No found user. Please sign up." },
-        { status: 400 },
-      );
-    }
-
-    if (!user.email && !user.password) {
-      return NextResponse.json(
-        { message: "No found user. Please sign up." },
-        { status: 400 },
-      );
-    }
     const hashedPassword = user.password;
     const isPasswordValid = await argon2.verify(hashedPassword, password);
 
-    if (isPasswordValid && user.email !== email) {
+    if (!isPasswordValid) {
       return NextResponse.json(
-        { message: "No registered email. Please sign up." },
+        { message: "Invalid password." },
         { status: 400 },
       );
     }
 
-    await setUserSession(email);
-    return NextResponse.json({}, { status: 200 });
+    const cookie = await setUserSession(String(user.id));
+    const response = NextResponse.json({}, { status: 200 });
+    response.cookies.set({
+      name: "tedflix.session-token",
+      value: cookie,
+      path: "/",
+    });
+    return response;
   } catch (error) {
     if (error instanceof AxiosError) {
       return NextResponse.json(

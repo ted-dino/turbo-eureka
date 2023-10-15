@@ -6,8 +6,8 @@ const issuer = process.env.JOSE_ISSUER_KEY as string;
 const audience = process.env.JOSE_AUDIENCE_KEY as string;
 const expiresAt = "1 day";
 
-export const encodeUserSession = async (email: string) => {
-  const jwt = await new jose.EncryptJWT({ email: email })
+export const encodeUserSession = async (userId: string) => {
+  const jwt = await new jose.EncryptJWT({ userId: userId })
     .setProtectedHeader({ alg: "dir", enc: "A128CBC-HS256" })
     .setIssuedAt()
     .setIssuer(issuer)
@@ -25,19 +25,20 @@ export const decodUserSession = async (jwt: string) => {
       audience: audience,
     });
 
-    const { email } = payload;
-    return email;
+    const { userId } = payload;
+    return userId;
   } catch (error) {
     if (error instanceof Error) {
-      return { message: "Session expired. Please log in again." };
+      return false;
     }
   }
   return null;
 };
 
-export const setUserSession = async (email: string) => {
-  const newSession = await encodeUserSession(email);
+export const setUserSession = async (userId: string) => {
+  const newSession = await encodeUserSession(userId);
   cookies().set("tedflix.session-token", newSession);
+  return newSession;
 };
 
 export const getUserSession = async () => {
@@ -53,9 +54,8 @@ export const getUserSession = async () => {
 };
 
 export const verifySession = async (token: string) => {
-  const jwtToken = cookies().get("tedflix.session-token");
-  if (jwtToken) {
-    const payload = await decodUserSession(jwtToken.value);
+  if (token) {
+    const payload = await decodUserSession(token);
     return payload;
   }
   return null;

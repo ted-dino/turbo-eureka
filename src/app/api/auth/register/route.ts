@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const dbResponse = await registerUser(toSaveData);
 
     if (dbResponse.status === 201) {
-      await setUserSession(email);
+      await setUserSession(dbResponse.data[0].id);
     }
     const { message } = dbResponse.data[0];
 
