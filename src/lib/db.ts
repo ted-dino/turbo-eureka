@@ -2,7 +2,8 @@ import * as argon2 from "argon2";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
-import { users } from "./schema";
+import { shows, users } from "./schema";
+import { Movie } from "@/types";
 
 const sql = neon(process.env.NEXT_PUBLIC_DATABASE_URL!);
 neonConfig.fetchConnectionCache = true;
@@ -21,8 +22,8 @@ export async function registerUser({
   password: string;
 }) {
   interface Response {
+    id: string;
     email: string;
-    avatar: string;
     message?: string;
   }
   let toInsertData = {
@@ -33,8 +34,8 @@ export async function registerUser({
 
   let response: Response[] = [
     {
-      email,
-      avatar: "",
+      id: "",
+      email: "",
       message: `Failed to register. Please try again.`,
     },
   ];
@@ -45,8 +46,8 @@ export async function registerUser({
     const dbResponseData = dbResponse[0];
     response = [
       {
+        id: dbResponseData.id.toString(),
         email: dbResponseData.email,
-        avatar: dbResponseData.avatar,
         message: "Registration completed successfully",
       },
     ];
@@ -62,3 +63,47 @@ export async function registerUser({
   }
   return { data: response, status: responseStatus };
 }
+
+export async function saveToPlaylist(item: Movie, userId: number) {
+  const { id, poster_path, title } = item;
+
+  let response = [
+    {
+      message: "",
+    },
+  ];
+  let responseStatus = 400;
+
+  let toInsertData = {
+    id,
+    posterPath: poster_path,
+    title,
+    userId,
+  };
+
+  try {
+    await db.insert(shows).values(toInsertData).returning();
+    response = [
+      {
+        message: `${title} has been saved successfully.`,
+      },
+    ];
+    responseStatus = 201;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (
+        error.message.includes("duplicate key value violates unique constraint")
+      ) {
+        response[0].message = `${title} has already been added.`;
+      }
+    }
+  }
+  return { data: response, status: responseStatus };
+}
+
+export const getPlayList = (id: number) => {
+  return db.select().from(shows).where(eq(shows.id, id));
+};
+export const removeInPlayList = (id: number) => {
+  return db.delete(shows).where(eq(shows.id, id));
+};
