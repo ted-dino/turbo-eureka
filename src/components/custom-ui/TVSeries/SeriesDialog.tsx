@@ -116,7 +116,7 @@ export default function SeriesDialog() {
                   name as string,
                 )}?source=0&season=${series?.seasons[0]
                   .season_number}&episode=1`}
-                infoLink="/info-link"
+                itemToSave={series}
               />
             </DialogHeader>
           </DialogContent>
