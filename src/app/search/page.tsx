@@ -1,3 +1,4 @@
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 import GenreItem from "@/components/custom-ui/Common/GenreItem";
 import { normalizeURL } from "@/lib/utils";
 import { Movie, Result } from "@/types";
@@ -101,6 +102,7 @@ export default async function Page({ searchParams }: Props) {
             ))}
         </>
       </ul>
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

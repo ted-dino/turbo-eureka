@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { moviesEndpoints, seriesEndpoints } from "@/data/endpoints";
 import GenreItem from "@/components/custom-ui/Common/GenreItem";
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 async function getData(type: string, genre: string | number, page?: string) {
   const TMBD_URL = process.env.NEXT_PUBLIC_TMDB_URL;
@@ -50,7 +51,7 @@ export default async function Page({
   searchParams,
 }: {
   params: { type: string; genre: string | number; page: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string>;
 }) {
   const { type, genre } = params;
 
@@ -144,6 +145,7 @@ export default async function Page({
             ))}
         </ul>
       </section>
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

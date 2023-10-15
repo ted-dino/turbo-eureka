@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import { seriesEndpoints } from "@/data/endpoints";
 import { Movie } from "@/types";
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 type Propss = {
   searchParams: Record<string, string> | null | undefined;
@@ -47,6 +48,7 @@ export default function Series({ searchParams }: Props) {
       <FeaturedSeries />
       <SlidersWrapper page="series" options={seriesEndpoints.slice(0, 5)} />
       {modal !== undefined && <SeriesDialog />}
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Movie, Similar } from "@/types";
 import MoviePlayer from "@/components/custom-ui/Movies/MoviePlayer";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 type Props = {
   params: { id: number };
@@ -52,7 +53,13 @@ async function getData(id: number) {
   return res.json();
 }
 
-export default async function Watch({ params }: { params: { id: number } }) {
+export default async function Watch({
+  params,
+  searchParams,
+}: {
+  params: { id: number };
+  searchParams: Record<string, string>;
+}) {
   const { id } = params;
   const similarMovies: Similar = await getData(id);
 
@@ -60,6 +67,7 @@ export default async function Watch({ params }: { params: { id: number } }) {
     <main className="pt-16">
       <MoviePlayer video_id={id} />
       <SimilarList similar={similarMovies} />
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

@@ -9,6 +9,7 @@ import { default as ImageLegacy } from "next/legacy/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 type Props = {
   params: { id: number };
@@ -63,9 +64,16 @@ async function getData(id: number) {
   return res.json();
 }
 
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: number };
+  searchParams: Record<string, string> | null | undefined;
+}) {
   const { id } = params;
   const data: SeriesList = await getData(Number(id));
+  const showLogin = searchParams && searchParams.showLogin;
 
   function renderTrailerLink(videos: Videos) {
     if (videos.results.length > 0) {
@@ -198,6 +206,7 @@ export default async function Page({ params }: { params: { id: number } }) {
         />
       </section>
       <SimilarList similar={data.similar} route="tv-series" />
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

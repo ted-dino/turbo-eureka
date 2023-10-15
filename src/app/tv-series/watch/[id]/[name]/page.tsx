@@ -2,6 +2,7 @@ import SeriesPlayer from "@/components/custom-ui/TVSeries/SeriesPlayer";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import { Series, Similar } from "@/types";
 import { Metadata } from "next";
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 type Props = {
   params: { id: number };
@@ -52,13 +53,20 @@ async function getData(id: number) {
   return res.json();
 }
 
-export default async function Watch({ params }: { params: { id: number } }) {
+export default async function Watch({
+  params,
+  searchParams,
+}: {
+  params: { id: number };
+  searchParams: Record<string, string>;
+}) {
   const { id } = params;
   const similar: Similar = await getData(id);
   return (
     <main className="pt-16">
       <SeriesPlayer series_id={id} />
       <SimilarList similar={similar} route="tv-series" />
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }

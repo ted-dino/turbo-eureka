@@ -1,3 +1,4 @@
+import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 import SlidersWrapper from "@/components/custom-ui/Common/Wrapper";
 import FeaturedMovie from "@/components/custom-ui/Movies/FeaturedMovie";
 import MovieDialog from "@/components/custom-ui/Movies/MovieDialog";
@@ -47,6 +48,7 @@ export default function Movies({ searchParams }: Props) {
       <FeaturedMovie />
       <SlidersWrapper page="movies" options={moviesEndpoints.slice(0, 9)} />
       {modal !== undefined && <MovieDialog />}
+      <AuthContainer searchParams={searchParams} />
     </main>
   );
 }
