@@ -17,7 +17,7 @@ const menu = [
   {
     id: 4,
     name: "My List",
-    link: "#",
+    link: "/my-list",
   },
 ];
 
