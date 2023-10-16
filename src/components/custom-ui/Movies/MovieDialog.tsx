@@ -15,7 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getMovieById } from "@/queryFns/movie";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import Buttons from "../Common/Buttons";
+import AddToListButton from "../Common/AddToListButton";
+import { Play } from "lucide-react";
 
 export default function MovieDialog() {
   const router = useRouter();
@@ -94,12 +95,18 @@ export default function MovieDialog() {
                   )}
                 </ul>
               </ul>
-              <Buttons
-                playLink={`/movies/watch/${item.id}/${normalizeURL(
-                  item.title,
-                )}?source=0`}
-                itemToSave={item}
-              />
+              <div className="flex items-center space-x-3">
+                <Link
+                  className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm"
+                  href={`/movies/watch/${item.id}/${normalizeURL(
+                    item.title,
+                  )}?source=0`}
+                >
+                  <Play absoluteStrokeWidth fill="black" color="black" />
+                  <span>Play</span>
+                </Link>
+                <AddToListButton type="dialog" itemToSave={item} />
+              </div>
             </DialogHeader>
           </DialogContent>
         </Dialog>

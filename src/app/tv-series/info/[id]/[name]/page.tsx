@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
+import AddToListButton from "@/components/custom-ui/Common/AddToListButton";
 
 type Props = {
   params: { id: number };
@@ -190,10 +191,7 @@ export default async function Page({
               <Play size={20} />
               <span className="text-lg">Watch</span>
             </Link>
-            <Button className="bg-white text-black flex items-center gap-x-2 hover:bg-white">
-              <Plus size={20} />
-              <span className="text-lg">Add to My List</span>
-            </Button>
+            <AddToListButton itemToSave={data} type="info" />
           </div>
         </div>
       </section>

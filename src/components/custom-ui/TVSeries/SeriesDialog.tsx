@@ -19,8 +19,9 @@ import { getSeriesById } from "@/queryFns/series";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../../ui/skeleton";
 import { useSearchParams, useRouter } from "next/navigation";
-import Buttons from "../Common/Buttons";
+import AddToListButton from "../Common/AddToListButton";
 import Link from "next/link";
+import { Play } from "lucide-react";
 
 export default function SeriesDialog() {
   const router = useRouter();
@@ -111,13 +112,19 @@ export default function SeriesDialog() {
                   </>
                 )}
               </ul>
-              <Buttons
-                playLink={`/tv-series/watch/${id}/${normalizeURL(
-                  name as string,
-                )}?source=0&season=${series?.seasons[0]
-                  .season_number}&episode=1`}
-                itemToSave={series}
-              />
+              <div className="flex items-center space-x-3">
+                <Link
+                  className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm"
+                  href={`/tv-series/watch/${id}/${normalizeURL(
+                    name as string,
+                  )}?source=0&season=${series?.seasons[0]
+                    .season_number}&episode=1`}
+                >
+                  <Play absoluteStrokeWidth fill="black" color="black" />
+                  <span>Play</span>
+                </Link>
+                <AddToListButton type="dialog" itemToSave={series} />
+              </div>
             </DialogHeader>
           </DialogContent>
         </Dialog>

@@ -1,6 +1,6 @@
+import AddToListButton from "@/components/custom-ui/Common/AddToListButton";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
-import { Button } from "@/components/ui/button";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import {
   formatDate,
@@ -199,10 +199,7 @@ export default async function Page({
             <Play size={20} />
             <span className="text-lg">Watch</span>
           </Link>
-          <Button className="bg-white text-black flex items-center gap-x-2 hover:bg-white">
-            <Plus size={20} />
-            <span className="text-lg">Add to My List</span>
-          </Button>
+          <AddToListButton itemToSave={data} type="info" />
         </div>
       </section>
       <SimilarList similar={data.similar} />
