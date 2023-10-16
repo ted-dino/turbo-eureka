@@ -27,6 +27,7 @@ import { Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "@/queryFns/user";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 export const registerSchema = z
   .object({
@@ -128,10 +129,8 @@ export default function RegisterForm() {
                     />
                   </FormControl>
                   <FormMessage />
-                  {error instanceof Error && (
-                    <FormMessage>
-                      Email is already taken. Please try again.
-                    </FormMessage>
+                  {error instanceof AxiosError && (
+                    <FormMessage>{error.response?.data.message}</FormMessage>
                   )}
                 </FormItem>
               )}
