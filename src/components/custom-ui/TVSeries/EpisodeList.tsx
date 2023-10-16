@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Play } from "lucide-react";
 import Spinner from "../Common/Spinner";
 import { FormEvent } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {
   series_id: number;
@@ -82,16 +83,18 @@ export default function EpisodeList({ series_id }: Props) {
                   placeholder={`${seasonItem.seasons[0].name}`}
                 />
               </SelectTrigger>
-              <SelectContent className="w-full">
-                {seasonItem.seasons.map((season) => (
-                  <SelectItem
-                    className="text-xs"
-                    key={season.id}
-                    value={`${season.season_number}`}
-                  >
-                    {season.name}
-                  </SelectItem>
-                ))}
+              <SelectContent className="max-h-60">
+                <ScrollArea className="h-full">
+                  {seasonItem.seasons.map((season) => (
+                    <SelectItem
+                      className="text-xs"
+                      key={season.id}
+                      value={`${season.season_number}`}
+                    >
+                      {season.name}
+                    </SelectItem>
+                  ))}
+                </ScrollArea>
               </SelectContent>
             </Select>
             <form onSubmit={(e) => handleSubmit(e)}>
