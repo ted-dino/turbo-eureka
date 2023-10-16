@@ -64,8 +64,12 @@ export async function registerUser({
   return { data: response, status: responseStatus };
 }
 
-export async function saveToPlaylist(item: Movie, userId: number) {
-  const { id, poster_path, title } = item;
+export async function saveToPlaylist(
+  item: Movie,
+  mediaType: string,
+  userId: number,
+) {
+  const { id, backdrop_path, title } = item;
 
   let response = [
     {
@@ -76,8 +80,9 @@ export async function saveToPlaylist(item: Movie, userId: number) {
 
   let toInsertData = {
     id,
-    posterPath: poster_path,
+    backdropPath: backdrop_path,
     title,
+    mediaType,
     userId,
   };
 
@@ -106,4 +111,8 @@ export const getPlayList = (id: number) => {
 };
 export const removeInPlayList = (id: number) => {
   return db.delete(shows).where(eq(shows.id, id));
+};
+
+export const getAllPlayList = async (id: number) => {
+  return db.select().from(shows).where(eq(shows.userId, id));
 };
