@@ -26,8 +26,8 @@ export default function LogoutButton({ user }: Props) {
     mutationFn: () => logoutUser(),
     onSuccess: () => {
       const route = returnToRoute(pathname, searchParams);
-      router.refresh();
       router.push(route);
+      location.reload();
     },
   });
 

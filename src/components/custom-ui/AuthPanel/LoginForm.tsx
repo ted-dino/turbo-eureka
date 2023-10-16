@@ -71,8 +71,8 @@ export default function LoginForm() {
     mutationFn: (credentials: Credentials) => loginUser(credentials),
     onSuccess: () => {
       const route = returnToRoute(pathname, searchParams);
-      router.refresh();
       router.push(route);
+      location.reload();
     },
   });
 
@@ -164,7 +164,7 @@ export default function LoginForm() {
               )}
             />
 
-            <Button className="mt-3 w-full" type="submit">
+            <Button disabled={isLoading} className="mt-3 w-full" type="submit">
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
