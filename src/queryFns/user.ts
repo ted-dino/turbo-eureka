@@ -32,8 +32,15 @@ export const logout = async () => {
   return status;
 };
 
-export const saveMedia = async (itemToSave: Movie | Series) => {
-  const response = await axios.post(`${API_URL}/api/playlist/`, itemToSave);
+export const saveMedia = async (
+  itemToSave: Movie | Series,
+  mediaType: string,
+) => {
+  const toSaveData = {
+    itemToSave,
+    mediaType,
+  };
+  const response = await axios.post(`${API_URL}/api/playlist/`, toSaveData);
   return response;
 };
 

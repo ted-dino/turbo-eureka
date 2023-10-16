@@ -29,8 +29,9 @@ export const shows = pgTable(
   {
     id: serial("id").primaryKey().notNull(),
     showId: integer("show_id"),
-    posterPath: text("poster_path").notNull(),
+    backdropPath: text("backdrop_path").notNull(),
     title: text("title").notNull(),
+    mediaType: text("media_type").notNull(),
     userId: integer("user_id").references(() => users.id),
     createdAt: timestamp("created_at").defaultNow(),
   },
