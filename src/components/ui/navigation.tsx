@@ -88,7 +88,10 @@ const Navigation = ({ user }: Props) => {
         <div className="w-full hidden lg:flex lg:items-center">
           <ul className="flex space-x-4">
             {menu.map((menu) => (
-              <li className="nav-item" key={menu.id}>
+              <li
+                className={`${!user && menu.id === 4 && "hidden"}`}
+                key={menu.id}
+              >
                 <a href={`${menu.link}`} className="nav-link">
                   {menu.name}
                 </a>
