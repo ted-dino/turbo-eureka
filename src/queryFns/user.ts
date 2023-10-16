@@ -33,7 +33,8 @@ export const logout = async () => {
 };
 
 export const saveMedia = async (itemToSave: Movie | Series) => {
-  await axios.post(`${API_URL}/api/playlist/`, itemToSave);
+  const response = await axios.post(`${API_URL}/api/playlist/`, itemToSave);
+  return response;
 };
 
 export const isInPlaylist = async (id: number) => {
