@@ -77,5 +77,6 @@ export const returnToRoute = (
   const current = new URLSearchParams(Array.from(searchParams.entries()));
   current.delete("showLogin");
   const search = current.toString();
-  return `${pathname}?${search}`;
+  const query = search ? `?${search}` : "";
+  return `${pathname}${query}`;
 };
