@@ -3,7 +3,7 @@ import { Result } from "@/types";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { moviesEndpoints, seriesEndpoints } from "@/data/endpoints";
-import GenreItem from "@/components/custom-ui/Common/GenreItem";
+import CardItem from "@/components/custom-ui/Common/CardItem";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 
 async function getData(type: string, genre: string | number, page?: string) {
@@ -130,7 +130,7 @@ export default async function Page({
             data.results &&
             data.results.map((item) => (
               <li key={item.id} className="relative">
-                <GenreItem
+                <CardItem
                   link={`${
                     type === "movie"
                       ? `/movies/info/${item.id}/${normalizeURL(item.title)}`

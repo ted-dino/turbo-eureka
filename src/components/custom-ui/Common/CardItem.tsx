@@ -7,17 +7,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import Spinner from "./Spinner";
+import { revalidatePath } from "next/cache";
 interface Props {
   link: string;
   path: string;
   title: string;
 }
 
-export default function GenreItem({ link, path, title }: Props) {
+export default function CardItem({ link, path, title }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const setTransition = () => {
+    revalidatePath("/my-list/");
     startTransition(() => {
       router.push(`${link}`);
     });

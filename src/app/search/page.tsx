@@ -1,5 +1,5 @@
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
-import GenreItem from "@/components/custom-ui/Common/GenreItem";
+import CardItem from "@/components/custom-ui/Common/CardItem";
 import { normalizeURL } from "@/lib/utils";
 import { Movie, Result } from "@/types";
 import { Metadata } from "next";
@@ -80,7 +80,7 @@ export default async function Page({ searchParams }: Props) {
           {movie &&
             movie.map((item) => (
               <li key={item.id} className="flex flex-col">
-                <GenreItem
+                <CardItem
                   link={`/movies/info/${item.id}/${normalizeURL(item.title)}`}
                   path={item.backdrop_path}
                   title={item.name ? item.name : item.title}
@@ -91,7 +91,7 @@ export default async function Page({ searchParams }: Props) {
           {series &&
             series.map((item) => (
               <li key={item.id} className="flex flex-col">
-                <GenreItem
+                <CardItem
                   link={`/tv-series/info/${item.id}/${normalizeURL(
                     item.name!,
                   )}?source=0&season=1&episode=1`}
