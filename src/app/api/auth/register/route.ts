@@ -35,6 +35,13 @@ export async function POST(request: Request) {
 
     if (dbResponse.status === 201) {
       await setUserSession(dbResponse.data[0].id);
+    } else {
+      return NextResponse.json(
+        {
+          message: "Server Error. Please contact the developer.",
+        },
+        { status: 500 },
+      );
     }
     const { message } = dbResponse.data[0];
 
