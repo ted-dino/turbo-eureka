@@ -5,6 +5,7 @@ import Navigation from "@/components/ui/navigation";
 import QueryProvider from "@/QueryProvider";
 import Footer from "../components/custom-ui/Common/Footer";
 import { getUserSession } from "@/lib/session";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default async function RootLayout({
             {children}
             <Footer />
           </div>
+          <Toaster />
         </body>
       </html>
     </QueryProvider>
