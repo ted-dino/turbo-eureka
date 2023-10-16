@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   const cookie = cookies().get("tedflix.session-token")?.value;
   if (!cookie) {
     return NextResponse.json(
-      { message: "Please login to save to your playlist." },
+      { message: "To save items to your playlist, kindly log in." },
       { status: 400 },
     );
   }
