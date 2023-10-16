@@ -69,14 +69,3 @@ export const updateParams = (
 
   return `${pathname}?${queryString}`;
 };
-
-export const returnToRoute = (
-  pathname: string,
-  searchParams: ReadonlyURLSearchParams,
-) => {
-  const current = new URLSearchParams(Array.from(searchParams.entries()));
-  current.delete("showLogin");
-  const search = current.toString();
-  const query = search ? `?${search}` : "";
-  return `${pathname}${query}`;
-};

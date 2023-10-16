@@ -28,11 +28,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { login } from "@/queryFns/user";
 import { useMutation } from "@tanstack/react-query";
-import { returnToRoute } from "@/lib/utils";
 import { AxiosError } from "axios";
 
 const loginSchema = z.object({
@@ -56,8 +55,6 @@ type Credentials = {
 
 export default function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -70,9 +67,8 @@ export default function LoginForm() {
     mutationKey: ["login-user"],
     mutationFn: (credentials: Credentials) => loginUser(credentials),
     onSuccess: () => {
-      const route = returnToRoute(pathname, searchParams);
-      router.push(route);
-      location.reload();
+      router.refresh();
+      router.back();
     },
   });
 

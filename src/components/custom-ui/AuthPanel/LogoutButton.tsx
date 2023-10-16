@@ -1,5 +1,4 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { returnToRoute, updateParams } from "@/lib/utils";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/queryFns/user";
@@ -11,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Spinner from "../Common/Spinner";
 import Link from "next/link";
 
 interface Props {
@@ -20,13 +18,9 @@ interface Props {
 
 export default function LogoutButton({ user }: Props) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: () => logoutUser(),
     onSuccess: () => {
-      const route = returnToRoute(pathname, searchParams);
-      router.push(route);
       location.reload();
     },
   });
