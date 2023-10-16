@@ -11,10 +11,15 @@ import Spinner from "./Spinner";
 
 interface Props {
   type: "dialog" | "info";
+  mediaType: string;
   itemToSave: Movie | Series;
 }
 
-export default function AddToListButton({ type, itemToSave }: Props) {
+export default function AddToListButton({
+  type,
+  mediaType,
+  itemToSave,
+}: Props) {
   const { mutate: add } = useMutation({
     mutationKey: ["playlist", itemToSave.id],
     mutationFn: () => addToList(),
@@ -44,7 +49,7 @@ export default function AddToListButton({ type, itemToSave }: Props) {
   });
 
   const addToList = async () => {
-    const { id, poster_path, name } = itemToSave;
+    const { id, backdrop_path, name } = itemToSave;
     const title =
       "title" in itemToSave
         ? (itemToSave as Movie).title
@@ -52,12 +57,12 @@ export default function AddToListButton({ type, itemToSave }: Props) {
 
     const updatedItemToSave = {
       id,
-      poster_path,
+      backdrop_path,
       name,
       title: "title" in itemToSave ? title : name,
     } as Movie | Series;
 
-    await saveMedia(updatedItemToSave);
+    await saveMedia(updatedItemToSave, mediaType);
   };
   return (
     <>

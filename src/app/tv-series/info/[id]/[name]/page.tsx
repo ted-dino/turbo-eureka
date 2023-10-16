@@ -191,7 +191,11 @@ export default async function Page({
               <Play size={20} />
               <span className="text-lg">Watch</span>
             </Link>
-            <AddToListButton itemToSave={data} type="info" />
+            <AddToListButton
+              mediaType="tv-series"
+              itemToSave={data}
+              type="info"
+            />
           </div>
         </div>
       </section>

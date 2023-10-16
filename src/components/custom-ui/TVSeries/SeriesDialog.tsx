@@ -123,7 +123,11 @@ export default function SeriesDialog() {
                   <Play absoluteStrokeWidth fill="black" color="black" />
                   <span>Play</span>
                 </Link>
-                <AddToListButton type="dialog" itemToSave={series} />
+                <AddToListButton
+                  mediaType="tv-series"
+                  type="dialog"
+                  itemToSave={series}
+                />
               </div>
             </DialogHeader>
           </DialogContent>

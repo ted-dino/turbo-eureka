@@ -105,7 +105,11 @@ export default function MovieDialog() {
                   <Play absoluteStrokeWidth fill="black" color="black" />
                   <span>Play</span>
                 </Link>
-                <AddToListButton type="dialog" itemToSave={item} />
+                <AddToListButton
+                  mediaType="movies"
+                  type="dialog"
+                  itemToSave={item}
+                />
               </div>
             </DialogHeader>
           </DialogContent>

@@ -28,7 +28,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ status: 400, errors: "Invalid data" });
     }
 
-    const dbResponse = await saveToPlaylist(data, Number(userId));
+    const dbResponse = await saveToPlaylist(
+      data.itemToSave,
+      data.mediaType,
+      Number(userId),
+    );
     return NextResponse.json(
       { message: dbResponse.data[0].message },
       { status: dbResponse.status },
