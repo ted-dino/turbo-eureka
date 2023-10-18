@@ -41,6 +41,7 @@ export default function AddToListButton({
     refetch,
     isLoading: playListLoading,
     isFetched,
+    isError,
     error,
   } = useQuery({
     queryKey: ["isInplaylist", itemToSave.id],
@@ -64,6 +65,7 @@ export default function AddToListButton({
 
     await saveMedia(updatedItemToSave, mediaType);
   };
+
   return (
     <>
       {type === "dialog" && isPlaylist && !error && (
