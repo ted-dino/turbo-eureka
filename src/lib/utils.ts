@@ -69,3 +69,13 @@ export const updateParams = (
 
   return `${pathname}?${queryString}`;
 };
+
+export const closeModal = (
+  pathname: string,
+  searchParams: ReadonlyURLSearchParams,
+) => {
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
+  current.delete("selectedShow");
+  const search = current.toString();
+  return `${pathname}?${search}`;
+};

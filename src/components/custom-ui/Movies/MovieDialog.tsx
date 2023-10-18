@@ -8,9 +8,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { shimmer, toBase64 } from "@/lib/shimmer";
-import { getBackdropImg, minsToHrs, normalizeURL } from "@/lib/utils";
+import {
+  closeModal,
+  getBackdropImg,
+  minsToHrs,
+  normalizeURL,
+} from "@/lib/utils";
 import Image from "next/legacy/image";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieById } from "@/queryFns/movie";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,6 +25,7 @@ import { Play } from "lucide-react";
 
 export default function MovieDialog() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const selectedShow = searchParams.get("selectedShow");
   const id = selectedShow?.replace(/dHYgc2VyaWVz|bW92aWVz/g, "") || "";
@@ -34,7 +40,13 @@ export default function MovieDialog() {
     <>
       {item && (
         <Dialog open={id ? true : false} onOpenChange={() => router.back()}>
-          <DialogContent className="bg-none">
+          <DialogContent
+            className="bg-none"
+            onInteractOutside={() => {
+              const url = closeModal(pathname, searchParams);
+              router.push(url, { scroll: false });
+            }}
+          >
             <DialogHeader>
               <DialogTitle className="mb-5">{item.title}</DialogTitle>
               <Image

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { shimmer, toBase64 } from "@/lib/shimmer";
 import {
+  closeModal,
   formatDate,
   getBackdropImg,
   minsToHrs,
@@ -18,13 +19,14 @@ import Image from "next/legacy/image";
 import { getSeriesById } from "@/queryFns/series";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../../ui/skeleton";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import AddToListButton from "../Common/AddToListButton";
 import Link from "next/link";
 import { Play } from "lucide-react";
 
 export default function SeriesDialog() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const selectedShow = searchParams.get("selectedShow");
   const id = selectedShow?.replace(/dHYgc2VyaWVz|bW92aWVz/g, "") || "";
@@ -39,8 +41,14 @@ export default function SeriesDialog() {
   return (
     <>
       {series && !isFetching && (
-        <Dialog open={id ? true : false} onOpenChange={() => router.back()}>
-          <DialogContent className="items-start bg-none">
+        <Dialog open={id ? true : false}>
+          <DialogContent
+            className="items-start bg-none"
+            onInteractOutside={() => {
+              const url = closeModal(pathname, searchParams);
+              router.push(url, { scroll: false });
+            }}
+          >
             <DialogHeader>
               <DialogTitle className="mb-5 flex items-baseline">
                 <span>{name}</span>
