@@ -67,8 +67,10 @@ export default function LoginForm() {
     mutationKey: ["login-user"],
     mutationFn: (credentials: Credentials) => loginUser(credentials),
     onSuccess: () => {
-      router.refresh();
       router.back();
+      setTimeout(() => {
+        router.refresh();
+      }, 900);
     },
   });
 

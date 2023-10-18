@@ -1,4 +1,4 @@
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/queryFns/user";
@@ -18,7 +18,7 @@ interface Props {
 
 export default function LogoutButton({ user }: Props) {
   const router = useRouter();
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: () => logoutUser(),
     onSuccess: () => {
       location.reload();
