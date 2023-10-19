@@ -27,21 +27,16 @@ export const footer = [
   {
     id: 1,
     name: "Home",
-    link: "#",
+    link: "/",
   },
   {
     id: 2,
-    name: "Contact",
-    link: "#",
+    name: "Privacy Policy",
+    link: "/privacy-policy",
   },
   {
     id: 3,
-    name: "Privacy Policy",
-    link: "#",
-  },
-  {
-    id: 4,
     name: "Terms of Service",
-    link: "#",
+    link: "/tos",
   },
 ];
