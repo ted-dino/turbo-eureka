@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { login } from "@/queryFns/user";
 import { useMutation } from "@tanstack/react-query";
@@ -55,6 +55,8 @@ type Credentials = {
 
 export default function LoginForm() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -67,10 +69,12 @@ export default function LoginForm() {
     mutationKey: ["login-user"],
     mutationFn: (credentials: Credentials) => loginUser(credentials),
     onSuccess: () => {
-      router.back();
-      setTimeout(() => {
-        router.refresh();
-      }, 900);
+      const current = new URLSearchParams(Array.from(searchParams.entries()));
+      current.delete("showLogin");
+      const search = current.toString();
+      const query = search ? `?${search}` : "";
+      router.push(`${pathname}${query}`);
+      router.refresh();
     },
   });
 
