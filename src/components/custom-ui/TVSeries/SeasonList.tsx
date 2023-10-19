@@ -34,7 +34,7 @@ export const SeasonList = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const seasonSearchParam = searchParams.get("season");
-  const { data: seasons } = useQuery({
+  const { data: seasons, isError } = useQuery({
     queryKey: ["seasons-list", seasonSearchParam],
     queryFn: () => getSeasonById(seriesId, Number(seasonSearchParam)),
     refetchOnWindowFocus: false,
@@ -70,7 +70,7 @@ export const SeasonList = ({
       <ul className="my-5 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-3 gap-x-4">
         {seasons && seasons.episodes.length > 0 ? (
           <>
-            {seasons?.episodes.map((season) => (
+            {seasons.episodes.map((season) => (
               <li
                 className="py-2 px-4 bg-[#292929] rounded-md cursor-pointer"
                 key={season.id}
@@ -93,8 +93,10 @@ export const SeasonList = ({
               </li>
             ))}
           </>
-        ) : (
+        ) : !isError ? (
           <Skeleton className="w-[200px] h-5" />
+        ) : (
+          <p>No result.</p>
         )}
       </ul>
     </>

@@ -40,7 +40,11 @@ export default function EpisodeList({ series_id }: Props) {
   });
 
   const { data: seasonItem } = seasonData;
-  const { data: episodes, isFetching: epsFetching } = episodeData;
+  const {
+    data: episodes,
+    isFetching: epsFetching,
+    isError: epsError,
+  } = episodeData;
   const current = new URLSearchParams(Array.from(searchParams.entries()));
 
   const handleSeasonChange = (season: string) => {
@@ -113,7 +117,11 @@ export default function EpisodeList({ series_id }: Props) {
       </div>
       <ul className="flex flex-col gap-y-2 p-2 h-full">
         {epsFetching && !episodes ? (
-          <Spinner />
+          !epsError ? (
+            <Spinner />
+          ) : (
+            <p>No result</p>
+          )
         ) : (
           <>
             {episodes &&

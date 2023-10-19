@@ -125,8 +125,9 @@ export default function SeriesDialog() {
                   className="px-5 py-2 text-black bg-white flex items-center gap-x-3 rounded-sm"
                   href={`/tv-series/watch/${id}/${normalizeURL(
                     name as string,
-                  )}?source=0&season=${series?.seasons[0]
-                    .season_number}&episode=1`}
+                  )}?source=0&season=${
+                    series?.seasons.length > 1 ? "1" : "0"
+                  }&episode=1`}
                 >
                   <Play absoluteStrokeWidth fill="black" color="black" />
                   <span>Play</span>

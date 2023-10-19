@@ -185,7 +185,9 @@ export default async function Page({
             <Link
               href={`/tv-series/watch/${data.id}/${normalizeURL(
                 data.name,
-              )}?source=0&season=${data.seasons[0].season_number}&episode=1`}
+              )}?source=0&season=${
+                data.seasons.length > 1 ? "1" : "0"
+              }&episode=1`}
               className="py-2 bg-[#d82327] flex justify-center items-center gap-x-2 rounded-md"
             >
               <Play size={20} />
