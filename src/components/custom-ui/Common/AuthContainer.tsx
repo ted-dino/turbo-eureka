@@ -3,7 +3,7 @@ import AuthPanel from "../AuthPanel";
 import { cookies } from "next/headers";
 
 type Props = {
-  searchParams: Record<string, string>;
+  searchParams: Record<string, string> | null | undefined;
 };
 
 export default function AuthContainer({ searchParams }: Props) {
