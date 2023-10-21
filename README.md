@@ -88,5 +88,5 @@ $ npm run dev
 
 ## License
 
-Tedflix is licensed under the MIT License - see the [LICENSE](https://github.com/ted-dino/turbo-eureka/blob/main/LICENSE) file for details.
+Tedflix is licensed under the GNU General Public License - see the [LICENSE](https://github.com/ted-dino/turbo-eureka/blob/main/LICENSE) file for details.
 
