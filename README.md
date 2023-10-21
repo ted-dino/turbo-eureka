@@ -32,3 +32,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+<!--
+https://stackoverflow.com/questions/75592894/react-query-call-only-when-submit-function-is-called
+https://stackoverflow.com/questions/71905267/can-i-import-next-image-with-a-different-name
+https://github.com/vercel/next.js/discussions/47583
+https://codepen.io/ahopkins/pen/gPKzqY
+https://codepen.io/lbnt/pen/jOPgrjV
+https://blog.bitsrc.io/react-form-validation-5aa06193bec4 - handlecheckbx
+https://www.youtube.com/watch?v=R_Pj593TH_Q - server actions
+https://www.youtube.com/watch?v=NfVELsEZFsA&t=6592s - drizzle neon
+https://www.youtube.com/watch?v=md65iBX5Gxg next auth nextjs
+https://github.com/mehmetpekcan/nextjs-13-jwt-auth-example/blob/master/src/app/api/login/route.js - set cookie
+-->
