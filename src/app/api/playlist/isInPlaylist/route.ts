@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const data = await request.json();
+  const showId = await request.json();
   const cookie = cookies().get("tedflix.session-token")?.value;
   if (!cookie) {
     return NextResponse.json(
@@ -21,10 +21,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const dbResponse = await getPlayList(data);
-  if (dbResponse.length !== 0 && cookie && userId) {
-    return NextResponse.json({ status: 201 });
-  } else {
-    return NextResponse.json({ status: 400 });
+  if (showId && cookie && userId) {
+    const dbResponse = await getPlayList(Number(userId), showId);
+    if (dbResponse.length !== 0) {
+      return NextResponse.json({ status: 201 });
+    }
   }
+  return NextResponse.json({ status: 400 });
 }

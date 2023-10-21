@@ -44,10 +44,10 @@ export const saveMedia = async (
   return response;
 };
 
-export const isInPlaylist = async (id: number) => {
+export const isInPlaylist = async (showId: number) => {
   const response = await axios.post(
     `${API_URL}/api/playlist/isInPlaylist/`,
-    id,
+    showId,
   );
 
   return response.data.status;

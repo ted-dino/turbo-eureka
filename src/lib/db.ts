@@ -1,7 +1,7 @@
 import * as argon2 from "argon2";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon, neonConfig } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { shows, users } from "./schema";
 import { Movie } from "@/types";
 
@@ -106,8 +106,11 @@ export async function saveToPlaylist(
   return { data: response, status: responseStatus };
 }
 
-export const getPlayList = (id: number) => {
-  return db.select().from(shows).where(eq(shows.id, id));
+export const getPlayList = (userId: number, showId: number) => {
+  return db
+    .select()
+    .from(shows)
+    .where(and(eq(shows.id, showId), eq(shows.userId, userId)));
 };
 export const removeInPlayList = (id: number) => {
   return db.delete(shows).where(eq(shows.id, id));
