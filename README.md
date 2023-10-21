@@ -23,7 +23,8 @@
 
 ## Overview
 
-![image](https://github.com/ted-dino/turbo-eureka/assets/84649871/81c7ddeb-57bc-45dd-9371-c6c2d77e49cf)
+![image](https://github.com/ted-dino/turbo-eureka/assets/84649871/a6f96212-c4a9-465e-b4ff-4b01b06c5ab9)
+
 
 ### Built With
 
@@ -33,7 +34,7 @@
 - [Tailwind](https://tailwindcss.com/)
 - [TMDB API](https://www.themoviedb.org/)
 - [shadcn](https://ui.shadcn.com/)
-- [Tantack Query](https://tanstack.com/query/latest/docs/react/overview)
+- [Tanstack Query](https://tanstack.com/query/latest/docs/react/overview)
 - [Drizzle ORM](https://orm.drizzle.team/)
 - [jose](https://github.com/panva/jose)
 - [argon2](https://github.com/ranisalt/node-argon2)
