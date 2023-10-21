@@ -3,6 +3,7 @@ import { Movie, Similar } from "@/types";
 import MoviePlayer from "@/components/custom-ui/Movies/MoviePlayer";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: number };
@@ -47,7 +48,7 @@ async function getData(id: number) {
   const res = await fetch(`${TMBD_URL}/movie/${id}/similar`, options);
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.status}`);
+    return notFound();
   }
 
   return res.json();

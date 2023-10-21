@@ -1,6 +1,7 @@
 import { normalizeURL } from "@/lib/utils";
 import { Movie, Similar } from "@/types";
 import SimilarItem from "./SimilarItem";
+import { notFound } from "next/navigation";
 
 interface Props {
   similar: Similar;
@@ -25,7 +26,7 @@ async function getData() {
   );
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.statusText}`);
+    return notFound();
   }
 
   return res.json();

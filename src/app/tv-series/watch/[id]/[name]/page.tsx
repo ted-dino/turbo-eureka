@@ -3,6 +3,7 @@ import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import { Series, Similar } from "@/types";
 import { Metadata } from "next";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: number };
@@ -47,7 +48,7 @@ async function getData(id: number) {
   const res = await fetch(`${TMBD_URL}/tv/${id}/similar`, options);
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.status}`);
+    return notFound();
   }
 
   return res.json();

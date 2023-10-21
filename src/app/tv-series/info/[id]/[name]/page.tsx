@@ -11,6 +11,7 @@ import { Metadata } from "next";
 import SimilarList from "@/components/custom-ui/Common/SimilarList";
 import AuthContainer from "@/components/custom-ui/Common/AuthContainer";
 import AddToListButton from "@/components/custom-ui/Common/AddToListButton";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: number };
@@ -59,7 +60,7 @@ async function getData(id: number) {
   );
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.statusText}`);
+    return notFound();
   }
 
   return res.json();

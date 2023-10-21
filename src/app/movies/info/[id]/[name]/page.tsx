@@ -13,6 +13,7 @@ import { Clapperboard, Play, Plus } from "lucide-react";
 import { Metadata } from "next";
 import { default as ImageLegacy } from "next/legacy/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: number };
@@ -61,7 +62,7 @@ async function getData(id: number) {
   );
 
   if (!res.ok) {
-    throw new Error(`Error: ${res.text}`);
+    return notFound();
   }
 
   return res.json();
