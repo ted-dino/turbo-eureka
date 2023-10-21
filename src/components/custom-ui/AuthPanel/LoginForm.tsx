@@ -74,7 +74,9 @@ export default function LoginForm() {
       const search = current.toString();
       const query = search ? `?${search}` : "";
       router.push(`${pathname}${query}`);
-      router.refresh();
+      setTimeout(() => {
+        location.reload();
+      }, 100);
     },
   });
 
