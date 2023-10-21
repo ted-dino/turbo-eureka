@@ -17,6 +17,7 @@
 - [How to use](#how-to-use)
 - [Acknowledgements](#acknowledgements)
 - [TODO's](#todo-list)
+- [License](#license]
 
 <!-- OVERVIEW -->
 
@@ -84,3 +85,8 @@ $ npm run dev
 - Address and fix the issue of iframe content blinking or flickering.
 - Synchronize tabs for consistent user experience.
 - Implement mobile navigation to ensure a seamless experience on small screens.
+
+## License
+
+Tedflix is licensed under the MIT License - see the [LICENSE](https://github.com/ted-dino/turbo-eureka/blob/main/LICENSE) file for details.
+
