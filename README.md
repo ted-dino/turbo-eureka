@@ -17,7 +17,7 @@
 - [How to use](#how-to-use)
 - [Acknowledgements](#acknowledgements)
 - [TODO's](#todo-list)
-- [License](#license]
+- [License](#license)
 
 <!-- OVERVIEW -->
 
