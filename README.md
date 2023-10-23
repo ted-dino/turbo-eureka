@@ -3,7 +3,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://weath3r-app.netlify.app/">
+    <a href="https://tedflixx.netlify.app/">
       Demo
     </a>
   </h3>
