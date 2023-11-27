@@ -81,11 +81,11 @@ $ npm run dev
 - [set cookie on login](https://github.com/mehmetpekcan/nextjs-13-jwt-auth-example/blob/master/src/app/api/login/route.js)
 
 ## TODO List
-- Refactor the code for improved maintainability and performance.
-- Implement a mechanism to prevent users from clicking on other media items while content is loading.
-- Address and fix the issue of iframe content blinking or flickering.
-- Synchronize tabs for consistent user experience.
-- Implement mobile navigation to ensure a seamless experience on small screens.
+- [ ] Refactor the code for improved maintainability and performance.
+- [ ] Implement a mechanism to prevent users from clicking on other media items while content is loading.
+- [ ] Address and fix the issue of iframe content blinking or flickering.
+- [ ] Synchronize tabs for consistent user experience.
+- [ ] Implement mobile navigation to ensure a seamless experience on small screens.
 
 ## License
 
